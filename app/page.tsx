@@ -4,12 +4,14 @@ import { useState, useCallback } from "react"
 import { Sidebar } from "@/components/sidebar"
 import { VramVisualization } from "@/components/vram-visualization"
 import {
+  GPUs,
   calculateVramBreakdown,
   calculatePerformance,
   calcPerfShape,
   calcRecommendations,
 } from "@/lib/db"
 import type { GpuSpec, ModelPreset, Partition, SpillPolicy } from "@/lib/db"
+import { useLocalStorage } from "@/lib/use-local-storage"
 
 interface LoadedModel extends ModelPreset {
   instanceId: string
@@ -24,6 +26,17 @@ export default function Home() {
   const [familyFilter, setFamilyFilter] = useState<string>("all")
   const [systemRamGb, setSystemRamGb] = useState(64)
   const [spillPolicy, setSpillPolicy] = useState<SpillPolicy>("avoid")
+  const [customGpus, setCustomGpus, gpusHydrated] = useLocalStorage<GpuSpec[]>("custom-gpus", [])
+
+  const allGpus = [...GPUs, ...(gpusHydrated ? customGpus : [])]
+
+  const handleAddCustomGpu = useCallback((newGpu: GpuSpec) => {
+    setCustomGpus(prev => [...prev, newGpu])
+  }, [setCustomGpus])
+
+  const handleRemoveCustomGpu = useCallback((id: string) => {
+    setCustomGpus(prev => prev.filter(g => g.id !== id))
+  }, [setCustomGpus])
 
   const addModel = useCallback((model: ModelPreset) => {
     if (!gpu) return
@@ -81,6 +94,9 @@ export default function Home() {
       <Sidebar
         gpu={gpu}
         setGpu={setGpu}
+        allGpus={allGpus}
+        onAddCustomGpu={handleAddCustomGpu}
+        onRemoveCustomGpu={handleRemoveCustomGpu}
         filter={filter}
         setFilter={setFilter}
         familyFilter={familyFilter}
@@ -98,6 +114,9 @@ export default function Home() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <VramVisualization
           gpu={gpu}
+          setGpu={setGpu}
+          allGpus={allGpus}
+          onAddCustomGpu={handleAddCustomGpu}
           partitions={partitions}
           totalUsedVram={totalUsedVram}
           totalFreeVram={totalFreeVram}

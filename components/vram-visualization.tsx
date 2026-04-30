@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import type { GpuSpec, Partition, SpillPolicy } from "@/lib/db"
+import { GPUs } from "@/lib/db"
+import { CustomGpuForm } from "@/components/custom-gpu-form"
 
 interface LiveGpu {
   index: number
@@ -23,6 +25,9 @@ interface LiveGpuResponse {
 
 interface VramVisualizationProps {
   gpu: GpuSpec | null
+  setGpu: (gpu: GpuSpec | null) => void
+  allGpus: GpuSpec[]
+  onAddCustomGpu: (gpu: GpuSpec) => void
   partitions: Partition[]
   totalUsedVram: number
   totalFreeVram: number
@@ -36,7 +41,8 @@ interface VramVisualizationProps {
 const liveModeEnabled = process.env.NEXT_PUBLIC_ENABLE_LIVE_MODE !== "false"
 
 export function VramVisualization({
-  gpu, partitions, totalUsedVram, totalFreeVram, totalRamSpill,
+  gpu, setGpu, allGpus, onAddCustomGpu,
+  partitions, totalUsedVram, totalFreeVram, totalRamSpill,
   updateModelSlots, updateModelContext,
 }: VramVisualizationProps) {
   const [view, setView] = useState<"plan" | "live">("plan")
@@ -76,11 +82,6 @@ export function VramVisualization({
              {liveModeEnabled && view === "live" ? "Live NVIDIA memory state" : "Simulated VRAM allocation"}
              <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">Beta</span>
            </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
-            {liveModeEnabled
-              ? <>Use planning mode for proposed model placement. Switch to live mode to inspect the current host if the container can execute <code className="text-cyan-200">nvidia-smi</code>.</>
-              : "Use planning mode for proposed model placement. Live host mode is disabled in this deployment."}
-          </p>
         </div>
         {liveModeEnabled && (
           <div className="flex rounded-2xl border border-zinc-800 bg-zinc-950 p-1">
@@ -93,6 +94,9 @@ export function VramVisualization({
       {!liveModeEnabled || view === "plan" ? (
         <PlanView
           gpu={gpu}
+          setGpu={setGpu}
+          allGpus={allGpus}
+          onAddCustomGpu={onAddCustomGpu}
           partitions={partitions}
           totalUsedVram={totalUsedVram}
           totalFreeVram={totalFreeVram}
@@ -108,15 +112,64 @@ export function VramVisualization({
 }
 
 function PlanView({
-  gpu, partitions, totalUsedVram, totalFreeVram, totalRamSpill,
+  gpu, setGpu, allGpus, onAddCustomGpu,
+  partitions, totalUsedVram, totalFreeVram, totalRamSpill,
   updateModelSlots, updateModelContext,
 }: Omit<VramVisualizationProps, 'systemRamGb' | 'spillPolicy'>) {
+  const [showCustomForm, setShowCustomForm] = useState(false)
+
   if (!gpu) {
+    const catalogGpus = allGpus.filter(g => GPUs.some(cg => cg.id === g.id))
+    const customGpus  = allGpus.filter(g => !GPUs.some(cg => cg.id === g.id))
+
+    function handleAddCustom(newGpu: GpuSpec) {
+      onAddCustomGpu(newGpu)
+      setGpu(newGpu)
+      setShowCustomForm(false)
+    }
+
     return (
-      <div className="mt-10 flex flex-1 items-center justify-center rounded-3xl border border-dashed border-zinc-800 bg-zinc-950/50 p-10 text-center">
-        <div>
-          <p className="text-lg font-medium text-white">Select a GPU to start planning.</p>
-          <p className="mt-2 text-sm text-zinc-500">Each model is broken down into weights, KV cache, and headroom.</p>
+      <div className="mt-10 flex flex-1 items-center justify-center rounded-3xl border border-dashed border-zinc-800 bg-zinc-950/50 p-10">
+        <div className="w-full max-w-sm">
+          <p className="text-center text-lg font-medium text-white">Select a GPU to start planning.</p>
+          <p className="mt-2 text-center text-sm text-zinc-500">Each model is broken down into weights, KV cache, and headroom.</p>
+
+          <div className="mt-6">
+            <label className="text-sm font-medium text-zinc-200" htmlFor="plan-gpu-select">Target GPU</label>
+            <select
+              id="plan-gpu-select"
+              className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none focus:border-cyan-400"
+              value=""
+              onChange={e => setGpu(allGpus.find(g => g.id === e.target.value) ?? null)}
+            >
+              <option value="">Choose a GPU…</option>
+              {catalogGpus.length > 0 && (
+                <optgroup label="Catalog">
+                  {catalogGpus.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
+                </optgroup>
+              )}
+              {customGpus.length > 0 && (
+                <optgroup label="Custom">
+                  {customGpus.map(g => <option key={g.id} value={g.id}>{g.name} — {g.vram} GB</option>)}
+                </optgroup>
+              )}
+            </select>
+          </div>
+
+          {showCustomForm ? (
+            <div className="mt-4 rounded-2xl border border-zinc-700 bg-zinc-950 p-4">
+              <p className="text-xs font-semibold text-zinc-300">New custom GPU</p>
+              <CustomGpuForm onAdd={handleAddCustom} onCancel={() => setShowCustomForm(false)} />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowCustomForm(true)}
+              className="mt-3 w-full rounded-xl border border-dashed border-zinc-700 px-3 py-2 text-xs text-zinc-500 transition hover:border-cyan-600 hover:text-cyan-400"
+            >
+              + Add custom GPU
+            </button>
+          )}
         </div>
       </div>
     )

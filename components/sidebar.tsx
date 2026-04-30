@@ -16,6 +16,9 @@ interface LoadedModel extends ModelPreset {
 interface SidebarProps {
   gpu: GpuSpec | null
   setGpu: (gpu: GpuSpec | null) => void
+  allGpus: GpuSpec[]
+  onAddCustomGpu: (gpu: GpuSpec) => void
+  onRemoveCustomGpu: (id: string) => void
   filter: string
   setFilter: (value: string) => void
   familyFilter: string
@@ -34,6 +37,9 @@ interface SidebarProps {
 export function Sidebar({
   gpu,
   setGpu,
+  allGpus,
+  onAddCustomGpu,
+  onRemoveCustomGpu,
   filter,
   setFilter,
   familyFilter,
@@ -48,15 +54,13 @@ export function Sidebar({
   spillPolicy,
   setSpillPolicy,
 }: SidebarProps) {
-  const [customGpus, setCustomGpus, gpusHydrated] = useLocalStorage<GpuSpec[]>("custom-gpus", [])
   const [customModels, setCustomModels, modelsHydrated] = useLocalStorage<ModelPreset[]>("custom-models", [])
   const [showGpuForm, setShowGpuForm] = useState(false)
   const [showModelForm, setShowModelForm] = useState(false)
   const [hideNoFit, setHideNoFit] = useState(true)
 
-  // Use empty arrays until hydrated so first client render matches server render
-  const allGpus = [...GPUs, ...(gpusHydrated ? customGpus : [])]
   const allModels = [...MODELS, ...(modelsHydrated ? customModels : [])]
+  const customGpus = allGpus.filter(g => !GPUs.some(cg => cg.id === g.id))
 
   const families = Array.from(new Set(allModels.map(m => m.family))).sort()
 
@@ -89,13 +93,13 @@ export function Sidebar({
     })
 
   function handleAddCustomGpu(newGpu: GpuSpec) {
-    setCustomGpus(prev => [...prev, newGpu])
+    onAddCustomGpu(newGpu)
     setGpu(newGpu)
     setShowGpuForm(false)
   }
 
   function handleRemoveCustomGpu(id: string) {
-    setCustomGpus(prev => prev.filter(g => g.id !== id))
+    onRemoveCustomGpu(id)
     if (gpu?.id === id) setGpu(null)
   }
 
