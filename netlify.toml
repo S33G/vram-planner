@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Disable live host mode on Netlify — nvidia-smi is not available in this
+  # environment. Set to "true" to re-enable if deploying with GPU access.
+  NEXT_PUBLIC_ENABLE_LIVE_MODE = "false"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
