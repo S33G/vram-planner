@@ -33,6 +33,8 @@ interface VramVisualizationProps {
   updateModelContext: (instanceId: string, ctx: number) => void
 }
 
+const liveModeEnabled = process.env.NEXT_PUBLIC_ENABLE_LIVE_MODE !== "false"
+
 export function VramVisualization({
   gpu, partitions, totalUsedVram, totalFreeVram, totalRamSpill,
   updateModelSlots, updateModelContext,
@@ -42,7 +44,7 @@ export function VramVisualization({
   const [isLoadingLive, setIsLoadingLive] = useState(false)
 
   useEffect(() => {
-    if (view !== "live") return
+    if (!liveModeEnabled || view !== "live") return
     let cancelled = false
     async function loadGpuState() {
       setIsLoadingLive(true)
@@ -71,20 +73,24 @@ export function VramVisualization({
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">Machine View</p>
            <h2 className="mt-2 flex items-center gap-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-             {view === "plan" ? "Simulated VRAM allocation" : "Live NVIDIA memory state"}
+             {liveModeEnabled && view === "live" ? "Live NVIDIA memory state" : "Simulated VRAM allocation"}
              <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">Beta</span>
            </h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
-            Use planning mode for proposed model placement. Switch to live mode to inspect the current host if the container can execute <code className="text-cyan-200">nvidia-smi</code>.
+            {liveModeEnabled
+              ? <>Use planning mode for proposed model placement. Switch to live mode to inspect the current host if the container can execute <code className="text-cyan-200">nvidia-smi</code>.</>
+              : "Use planning mode for proposed model placement. Live host mode is disabled in this deployment."}
           </p>
         </div>
-        <div className="flex rounded-2xl border border-zinc-800 bg-zinc-950 p-1">
-          <ToggleButton active={view === "plan"} onClick={() => setView("plan")}>Plan</ToggleButton>
-          <ToggleButton active={view === "live"} onClick={() => setView("live")}>Live host</ToggleButton>
-        </div>
+        {liveModeEnabled && (
+          <div className="flex rounded-2xl border border-zinc-800 bg-zinc-950 p-1">
+            <ToggleButton active={view === "plan"} onClick={() => setView("plan")}>Plan</ToggleButton>
+            <ToggleButton active={view === "live"} onClick={() => setView("live")}>Live host</ToggleButton>
+          </div>
+        )}
       </div>
 
-      {view === "plan" ? (
+      {!liveModeEnabled || view === "plan" ? (
         <PlanView
           gpu={gpu}
           partitions={partitions}
