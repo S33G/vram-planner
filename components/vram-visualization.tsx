@@ -154,29 +154,29 @@ function PlanView({
               </span>
             </div>
 
-            {/* Segmented bar */}
+            {/* Segmented bar — horizontal */}
             <div className="mt-6 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 p-3">
-              <div className="flex h-20 overflow-hidden rounded-2xl bg-zinc-950">
+              <div className="flex h-14 w-full overflow-hidden rounded-2xl bg-zinc-950">
                 {partitions.map((p) => {
-                  const base = Math.max(totalUsedVram, gpu.vram)
-                  const wPct  = (p.breakdown.weights  / base) * 100
-                  const kvPct = (p.breakdown.kvCache  / base) * 100
-                  const hPct  = (p.breakdown.headroom / base) * 100
-                  const totalPct = Math.max(((p.breakdown.gpuUsed / base) * 100), 3)
+                  const base    = Math.max(totalUsedVram, gpu.vram)
+                  const wPct    = (p.breakdown.weights  / base) * 100
+                  const kvPct   = (p.breakdown.kvCache  / base) * 100
+                  const hPct    = (p.breakdown.headroom / base) * 100
                   return (
-                    <div key={p.id} className="flex min-w-0 flex-col overflow-hidden border-r border-zinc-950" style={{ width: `${totalPct}%` }} title={`${p.name}: ${p.vramAllocated.toFixed(1)} GB`}>
-                      <div className="overflow-hidden bg-cyan-600 px-1 pb-0.5 text-[10px] font-bold text-zinc-950" style={{ height: `${wPct}%` }} />
+                    <div key={p.id} className="group relative flex h-full min-w-0 flex-row overflow-hidden border-r-2 border-zinc-950 last:border-r-0" style={{ width: `${wPct + kvPct + hPct}%` }} title={`${p.name}: ${p.vramAllocated.toFixed(1)} GB`}>
+                      <div className="h-full bg-cyan-600"     style={{ width: `${wPct  / (wPct + kvPct + hPct) * 100}%` }} />
                       {p.breakdown.kvCache > 0 && (
-                        <div className="overflow-hidden bg-blue-600" style={{ height: `${kvPct}%` }} />
+                        <div className="h-full bg-blue-600"   style={{ width: `${kvPct / (wPct + kvPct + hPct) * 100}%` }} />
                       )}
-                      <div className="flex flex-1 items-center justify-center overflow-hidden bg-amber-700/70 text-[10px] font-bold text-amber-200" style={{ height: `${hPct}%` }}>
-                        <span className="line-clamp-1 px-1 leading-tight">{p.name}</span>
-                      </div>
+                      <div className="h-full bg-amber-700/70" style={{ width: `${hPct  / (wPct + kvPct + hPct) * 100}%` }} />
+                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white/70 opacity-0 transition group-hover:opacity-100">
+                        {p.name}
+                      </span>
                     </div>
                   )
                 })}
                 {freePercent > 0 && (
-                  <div className="flex flex-1 items-center justify-center bg-emerald-500/15 text-xs font-medium text-emerald-200" style={{ width: `${freePercent}%` }}>
+                  <div className="flex h-full flex-1 items-center justify-center bg-emerald-500/15 text-xs font-medium text-emerald-200" style={{ width: `${freePercent}%` }}>
                     {freePercent > 8 ? "Free" : ""}
                   </div>
                 )}
@@ -269,6 +269,9 @@ function PartitionDetail({
     : 'bg-red-900/40 text-red-400'
   const fitBadgeLabel = breakdown.fitStatus === 'fits' ? 'Fits' : breakdown.fitStatus === 'spills' ? 'Spills to RAM' : 'Does not fit'
 
+  // Bar scale: use the larger of total footprint vs gpu capacity so overflow is visible
+  const barScale = Math.max(breakdown.total, gpuVram)
+
   return (
     <section className="rounded-3xl border border-zinc-800 bg-zinc-950/80 p-5 md:p-7">
       <div className="flex items-center justify-between gap-3">
@@ -276,38 +279,57 @@ function PartitionDetail({
         <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${fitBadgeColor}`}>{fitBadgeLabel}</span>
       </div>
 
-      {/* Controls: slots + context */}
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <div className="flex flex-col gap-1">
-          <label className="text-xs text-zinc-400">Parallel slots</label>
+      {/* Controls: sliders */}
+      <div className="mt-4 flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-zinc-400">Parallel slots</label>
+            <span className="text-xs font-semibold text-zinc-200">{slots}</span>
+          </div>
           <input
-            type="number"
+            type="range"
             min="1"
             max="32"
-            className="rounded-xl border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none focus:border-cyan-400"
+            step="1"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-700 accent-cyan-400"
             value={slots}
-            onChange={e => onSlotsChange(Math.max(1, parseInt(e.target.value) || 1))}
+            onChange={e => onSlotsChange(parseInt(e.target.value))}
           />
+          <div className="flex justify-between text-[10px] text-zinc-600">
+            <span>1</span><span>8</span><span>16</span><span>32</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs text-zinc-400">Context (tokens)</label>
+
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-zinc-400">Context length</label>
+            <span className="text-xs font-semibold text-zinc-200">
+              {contextLength >= 1024 ? `${(contextLength / 1024).toFixed(0)}k` : contextLength} tokens
+            </span>
+          </div>
           <input
-            type="number"
+            type="range"
             min="512"
-            max="1048576"
+            max="131072"
             step="512"
-            className="rounded-xl border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none focus:border-cyan-400"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-700 accent-cyan-400"
             value={contextLength}
-            onChange={e => onContextChange(Math.max(512, parseInt(e.target.value) || 512))}
+            onChange={e => onContextChange(parseInt(e.target.value))}
           />
+          <div className="flex justify-between text-[10px] text-zinc-600">
+            <span>512</span><span>16k</span><span>64k</span><span>128k</span>
+          </div>
         </div>
       </div>
 
-      {/* Segmented mini-bar */}
-      <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-zinc-800">
-        <div className="h-full bg-cyan-600"   style={{ width: `${Math.min((breakdown.weights  / gpuVram) * 100, 100)}%` }} />
-        <div className="h-full bg-blue-600"   style={{ width: `${Math.min((breakdown.kvCache  / gpuVram) * 100, 100)}%` }} />
-        <div className="h-full bg-amber-700"  style={{ width: `${Math.min((breakdown.headroom / gpuVram) * 100, 100)}%` }} />
+      {/* Segmented bar — horizontal, scaled to model footprint */}
+      <div className="mt-4 flex h-5 w-full overflow-hidden rounded-full bg-zinc-800">
+        <div className="h-full bg-cyan-600"     style={{ width: `${(breakdown.weights  / barScale) * 100}%` }} title={`Weights ${breakdown.weights.toFixed(1)} GB`} />
+        <div className="h-full bg-blue-600"     style={{ width: `${(breakdown.kvCache  / barScale) * 100}%` }} title={`KV cache ${breakdown.kvCache.toFixed(1)} GB`} />
+        <div className="h-full bg-amber-700/70" style={{ width: `${(breakdown.headroom / barScale) * 100}%` }} title={`Headroom ${breakdown.headroom.toFixed(1)} GB`} />
+        {breakdown.overflow > 0 && (
+          <div className="h-full bg-red-600/70" style={{ width: `${(breakdown.overflow / barScale) * 100}%` }} title={`Over by ${breakdown.overflow.toFixed(1)} GB`} />
+        )}
       </div>
       <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-zinc-500">
         <span>Weights {breakdown.weights.toFixed(1)} GB</span>
@@ -326,29 +348,24 @@ function PartitionDetail({
       {/* Slot planner */}
       {slots > 0 && (
         <div className="mt-4">
-          <p className="text-xs font-semibold text-zinc-400">Slot planner</p>
-          <p className="mt-0.5 text-xs text-zinc-600">Every slot consumes its own KV allocation. More slots multiply KV pressure.</p>
-          <div className="mt-3 flex flex-col gap-2">
-            {Array.from({ length: Math.min(slots, 8) }).map((_, i) => (
-              <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-zinc-300">Slot {i + 1}</span>
-                  <span className="text-zinc-500">
-                    {contextLength >= 1000 ? `${(contextLength / 1000).toFixed(0)}k` : contextLength} tokens
-                  </span>
-                </div>
-                <div className="mt-2 flex h-2 overflow-hidden rounded-full bg-zinc-800">
-                  {/* KV share */}
-                  <div className="h-full bg-blue-600" style={{ width: `${Math.min((perSlotKv / gpuVram) * 100 * 4, 100)}%` }} />
-                  {/* Free headroom (visual) */}
-                  <div className="h-full bg-emerald-600/30" style={{ width: `${Math.max(0, 40 - Math.min((perSlotKv / gpuVram) * 100 * 4, 40))}%` }} />
-                </div>
-                <p className="mt-1 text-xs text-zinc-600">KV share ≈ {perSlotKv.toFixed(2)} GB</p>
-              </div>
+          <div className="flex items-baseline justify-between">
+            <p className="text-xs font-semibold text-zinc-400">Slot planner</p>
+            <p className="text-xs text-zinc-600">{perSlotKv.toFixed(2)} GB KV per slot</p>
+          </div>
+          <p className="mt-0.5 text-xs text-zinc-600">Each slot adds its own KV allocation — more slots multiply KV pressure.</p>
+          <div className="mt-3 flex h-5 w-full overflow-hidden rounded-full bg-zinc-800">
+            {Array.from({ length: slots }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-full border-r border-zinc-950 last:border-r-0 ${i % 2 === 0 ? 'bg-blue-600' : 'bg-blue-500'}`}
+                style={{ width: `${Math.min((perSlotKv / gpuVram) * 100, 100 / slots)}%` }}
+                title={`Slot ${i + 1}: ${perSlotKv.toFixed(2)} GB`}
+              />
             ))}
-            {slots > 8 && (
-              <p className="text-xs text-zinc-600">…and {slots - 8} more slots</p>
-            )}
+          </div>
+          <div className="mt-1.5 flex justify-between text-xs text-zinc-600">
+            <span>Slot 1</span>
+            <span>Slot {slots} · {breakdown.kvCache.toFixed(1)} GB total KV</span>
           </div>
         </div>
       )}
