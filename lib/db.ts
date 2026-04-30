@@ -1,5 +1,3 @@
-export const BETA = true
-
 export interface GpuSpec {
   id: string
   name: string

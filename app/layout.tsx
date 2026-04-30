@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GPU Partitioner",
-  description: "GPU VRAM partition planner for LLM inference",
+  title: "VRAM Planner",
+  description: "GPU VRAM planner for LLM inference",
 };
 
 export default function RootLayout({

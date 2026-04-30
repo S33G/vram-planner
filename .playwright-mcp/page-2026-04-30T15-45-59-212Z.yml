@@ -1,0 +1,397 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - paragraph [ref=e5]: VRAM Planner
+        - heading "Plan model placement before loading weights." [level=1] [ref=e6]
+        - paragraph [ref=e7]: Pick a target GPU, add models, and compare the simulated plan with live NVIDIA GPU memory when available.
+      - generic [ref=e8]:
+        - text: Target GPU
+        - combobox "Target GPU" [ref=e9]:
+          - option "Select a GPU" [selected]
+          - option "NVIDIA H100 80GB"
+          - option "NVIDIA H100 40GB SXM"
+          - option "NVIDIA A100 80GB"
+          - option "NVIDIA A100 40GB"
+          - option "NVIDIA RTX Ada 6000 48GB"
+          - option "NVIDIA RTX 4090 24GB"
+          - option "NVIDIA RTX 4080 Super 16GB"
+          - option "NVIDIA RTX 4080 12GB"
+          - option "NVIDIA RTX 4070 Super 12GB"
+          - option "NVIDIA RTX 4060 Ti 16GB"
+          - option "NVIDIA RTX 4060 Ti 8GB"
+          - option "NVIDIA RTX 4060 8GB"
+          - option "NVIDIA RTX 3090 24GB"
+          - option "NVIDIA RTX 3080 10GB"
+          - option "NVIDIA RTX 3080 12GB"
+          - option "NVIDIA RTX 3070 8GB"
+          - option "NVIDIA RTX 3060 12GB"
+          - option "NVIDIA RTX 3060 12GB (rev)"
+          - option "NVIDIA L40S 48GB"
+          - option "NVIDIA L4 24GB"
+          - option "NVIDIA T4 16GB"
+          - option "NVIDIA V100 32GB"
+          - option "NVIDIA V100 16GB"
+          - option "NVIDIA V100 12GB"
+          - option "AMD MI300X 192GB"
+          - option "AMD MI250X 128GB"
+          - option "AMD MI250 64GB"
+          - option "AMD MI100 32GB"
+          - option "AMD RX 7900 XTX 24GB"
+          - option "AMD RX 7900 XT 20GB"
+          - option "AMD RX 7900 GRE 16GB"
+          - option "AMD RX 7800 XT 16GB"
+          - option "AMD RX 7700 XT 12GB"
+          - option "AMD RX 6900 XT 16GB"
+          - option "AMD RX 6800 XT 16GB"
+          - option "Apple M4 Max 24GB"
+          - option "Apple M4 Max 32GB"
+          - option "Apple M3 Max 18GB"
+          - option "Apple M3 Max 36GB"
+          - option "Apple M2 Ultra 16GB"
+          - option "Apple M2 Ultra 64GB"
+          - option "Apple M2 Ultra 192GB"
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - heading "Model Catalog" [level=2] [ref=e12]
+          - generic [ref=e13]: 49 matches
+        - textbox "Search model, family, tag" [ref=e14]
+        - combobox [ref=e15]:
+          - option "All families" [selected]
+          - option "Alpaca"
+          - option "BERT"
+          - option "CodeLlama"
+          - option "DeepSeek"
+          - option "Dolly"
+          - option "FLUX"
+          - option "Falcon"
+          - option "Gemma"
+          - option "Guanaco"
+          - option "Llama"
+          - option "Mistral"
+          - option "Phi"
+          - option "Qwen"
+          - option "RedPajama"
+          - option "RoBERTa"
+          - option "SentenceTransformers"
+          - option "Stable"
+          - option "StableDiffusion"
+        - generic [ref=e16]:
+          - button "Qwen 2.5 72B Qwen / bf16 / 131,072 ctx 144 GB" [disabled] [ref=e17]:
+            - generic [ref=e18]:
+              - generic [ref=e19]:
+                - paragraph [ref=e20]: Qwen 2.5 72B
+                - paragraph [ref=e21]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e22]: 144 GB
+          - button "Qwen 2.5 32B Qwen / bf16 / 131,072 ctx 64 GB" [disabled] [ref=e23]:
+            - generic [ref=e24]:
+              - generic [ref=e25]:
+                - paragraph [ref=e26]: Qwen 2.5 32B
+                - paragraph [ref=e27]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e28]: 64 GB
+          - button "Qwen 2.5 14B Qwen / bf16 / 131,072 ctx 28 GB" [disabled] [ref=e29]:
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - paragraph [ref=e32]: Qwen 2.5 14B
+                - paragraph [ref=e33]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e34]: 28 GB
+          - button "Qwen 2.5 7B Qwen / bf16 / 131,072 ctx 14 GB" [disabled] [ref=e35]:
+            - generic [ref=e36]:
+              - generic [ref=e37]:
+                - paragraph [ref=e38]: Qwen 2.5 7B
+                - paragraph [ref=e39]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e40]: 14 GB
+          - button "Qwen 2.5 3B Qwen / bf16 / 131,072 ctx 6 GB" [disabled] [ref=e41]:
+            - generic [ref=e42]:
+              - generic [ref=e43]:
+                - paragraph [ref=e44]: Qwen 2.5 3B
+                - paragraph [ref=e45]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e46]: 6 GB
+          - button "Qwen 2.5 1.5B Qwen / bf16 / 131,072 ctx 3 GB" [disabled] [ref=e47]:
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - paragraph [ref=e50]: Qwen 2.5 1.5B
+                - paragraph [ref=e51]: Qwen / bf16 / 131,072 ctx
+              - generic [ref=e52]: 3 GB
+          - button "Qwen 2.5 72B (Q4_K_M) Qwen / int4 / 131,072 ctx 40 GB" [disabled] [ref=e53]:
+            - generic [ref=e54]:
+              - generic [ref=e55]:
+                - paragraph [ref=e56]: Qwen 2.5 72B (Q4_K_M)
+                - paragraph [ref=e57]: Qwen / int4 / 131,072 ctx
+              - generic [ref=e58]: 40 GB
+          - button "Qwen 2.5 32B (Q4_K_M) Qwen / int4 / 131,072 ctx 20 GB" [disabled] [ref=e59]:
+            - generic [ref=e60]:
+              - generic [ref=e61]:
+                - paragraph [ref=e62]: Qwen 2.5 32B (Q4_K_M)
+                - paragraph [ref=e63]: Qwen / int4 / 131,072 ctx
+              - generic [ref=e64]: 20 GB
+          - button "Llama 3.3 70B Llama / bf16 / 131,072 ctx 140 GB" [disabled] [ref=e65]:
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - paragraph [ref=e68]: Llama 3.3 70B
+                - paragraph [ref=e69]: Llama / bf16 / 131,072 ctx
+              - generic [ref=e70]: 140 GB
+          - button "Llama 3.1 8B Llama / bf16 / 131,072 ctx 16 GB" [disabled] [ref=e71]:
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - paragraph [ref=e74]: Llama 3.1 8B
+                - paragraph [ref=e75]: Llama / bf16 / 131,072 ctx
+              - generic [ref=e76]: 16 GB
+          - button "Llama 3.1 70B Llama / bf16 / 131,072 ctx 140 GB" [disabled] [ref=e77]:
+            - generic [ref=e78]:
+              - generic [ref=e79]:
+                - paragraph [ref=e80]: Llama 3.1 70B
+                - paragraph [ref=e81]: Llama / bf16 / 131,072 ctx
+              - generic [ref=e82]: 140 GB
+          - button "Llama 3.1 70B (Q4_K_M) Llama / int4 / 131,072 ctx 38 GB" [disabled] [ref=e83]:
+            - generic [ref=e84]:
+              - generic [ref=e85]:
+                - paragraph [ref=e86]: Llama 3.1 70B (Q4_K_M)
+                - paragraph [ref=e87]: Llama / int4 / 131,072 ctx
+              - generic [ref=e88]: 38 GB
+          - button "Llama 3.1 8B (Q4_K_M) Llama / int4 / 131,072 ctx 5 GB" [disabled] [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]:
+                - paragraph [ref=e92]: Llama 3.1 8B (Q4_K_M)
+                - paragraph [ref=e93]: Llama / int4 / 131,072 ctx
+              - generic [ref=e94]: 5 GB
+          - button "Llama 3 8B Llama / bf16 / 8,192 ctx 16 GB" [disabled] [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]:
+                - paragraph [ref=e98]: Llama 3 8B
+                - paragraph [ref=e99]: Llama / bf16 / 8,192 ctx
+              - generic [ref=e100]: 16 GB
+          - button "Mistral Large Mistral / bf16 / 131,072 ctx 246 GB" [disabled] [ref=e101]:
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - paragraph [ref=e104]: Mistral Large
+                - paragraph [ref=e105]: Mistral / bf16 / 131,072 ctx
+              - generic [ref=e106]: 246 GB
+          - button "Mistral Small Mistral / bf16 / 32,768 ctx 44 GB" [disabled] [ref=e107]:
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - paragraph [ref=e110]: Mistral Small
+                - paragraph [ref=e111]: Mistral / bf16 / 32,768 ctx
+              - generic [ref=e112]: 44 GB
+          - button "Mistral 7B Mistral / bf16 / 32,768 ctx 14 GB" [disabled] [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - paragraph [ref=e116]: Mistral 7B
+                - paragraph [ref=e117]: Mistral / bf16 / 32,768 ctx
+              - generic [ref=e118]: 14 GB
+          - button "Mistral 7B (Q4_K_M) Mistral / int4 / 32,768 ctx 4 GB" [disabled] [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e121]:
+                - paragraph [ref=e122]: Mistral 7B (Q4_K_M)
+                - paragraph [ref=e123]: Mistral / int4 / 32,768 ctx
+              - generic [ref=e124]: 4 GB
+          - button "Mixtral 8x7B Mistral / bf16 / 32,768 ctx 94 GB" [disabled] [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - paragraph [ref=e128]: Mixtral 8x7B
+                - paragraph [ref=e129]: Mistral / bf16 / 32,768 ctx
+              - generic [ref=e130]: 94 GB
+          - button "Mixtral 8x22B Mistral / bf16 / 65,536 ctx 282 GB" [disabled] [ref=e131]:
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - paragraph [ref=e134]: Mixtral 8x22B
+                - paragraph [ref=e135]: Mistral / bf16 / 65,536 ctx
+              - generic [ref=e136]: 282 GB
+          - button "Phi-3 Mini Phi / bf16 / 128,000 ctx 7.6 GB" [disabled] [ref=e137]:
+            - generic [ref=e138]:
+              - generic [ref=e139]:
+                - paragraph [ref=e140]: Phi-3 Mini
+                - paragraph [ref=e141]: Phi / bf16 / 128,000 ctx
+              - generic [ref=e142]: 7.6 GB
+          - button "Phi-3 Small Phi / bf16 / 128,000 ctx 14 GB" [disabled] [ref=e143]:
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - paragraph [ref=e146]: Phi-3 Small
+                - paragraph [ref=e147]: Phi / bf16 / 128,000 ctx
+              - generic [ref=e148]: 14 GB
+          - button "Phi-3 Medium Phi / bf16 / 128,000 ctx 28 GB" [disabled] [ref=e149]:
+            - generic [ref=e150]:
+              - generic [ref=e151]:
+                - paragraph [ref=e152]: Phi-3 Medium
+                - paragraph [ref=e153]: Phi / bf16 / 128,000 ctx
+              - generic [ref=e154]: 28 GB
+          - button "Phi-3.5 Mini Phi / bf16 / 128,000 ctx 8 GB" [disabled] [ref=e155]:
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - paragraph [ref=e158]: Phi-3.5 Mini
+                - paragraph [ref=e159]: Phi / bf16 / 128,000 ctx
+              - generic [ref=e160]: 8 GB
+          - button "Gemma 2 27B Gemma / bf16 / 8,192 ctx 54 GB" [disabled] [ref=e161]:
+            - generic [ref=e162]:
+              - generic [ref=e163]:
+                - paragraph [ref=e164]: Gemma 2 27B
+                - paragraph [ref=e165]: Gemma / bf16 / 8,192 ctx
+              - generic [ref=e166]: 54 GB
+          - button "Gemma 2 9B Gemma / bf16 / 8,192 ctx 18 GB" [disabled] [ref=e167]:
+            - generic [ref=e168]:
+              - generic [ref=e169]:
+                - paragraph [ref=e170]: Gemma 2 9B
+                - paragraph [ref=e171]: Gemma / bf16 / 8,192 ctx
+              - generic [ref=e172]: 18 GB
+          - button "Gemma 2 2B Gemma / bf16 / 4,096 ctx 5.2 GB" [disabled] [ref=e173]:
+            - generic [ref=e174]:
+              - generic [ref=e175]:
+                - paragraph [ref=e176]: Gemma 2 2B
+                - paragraph [ref=e177]: Gemma / bf16 / 4,096 ctx
+              - generic [ref=e178]: 5.2 GB
+          - button "Stable Code 3B Stable / bf16 / 16,384 ctx 6 GB" [disabled] [ref=e179]:
+            - generic [ref=e180]:
+              - generic [ref=e181]:
+                - paragraph [ref=e182]: Stable Code 3B
+                - paragraph [ref=e183]: Stable / bf16 / 16,384 ctx
+              - generic [ref=e184]: 6 GB
+          - button "Stable LM 12B Stable / bf16 / 4,096 ctx 24 GB" [disabled] [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - paragraph [ref=e188]: Stable LM 12B
+                - paragraph [ref=e189]: Stable / bf16 / 4,096 ctx
+              - generic [ref=e190]: 24 GB
+          - button "Dolly 12B Dolly / bf16 / 2,048 ctx 24 GB" [disabled] [ref=e191]:
+            - generic [ref=e192]:
+              - generic [ref=e193]:
+                - paragraph [ref=e194]: Dolly 12B
+                - paragraph [ref=e195]: Dolly / bf16 / 2,048 ctx
+              - generic [ref=e196]: 24 GB
+          - button "RedPajama 12B RedPajama / bf16 / 2,048 ctx 24 GB" [disabled] [ref=e197]:
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - paragraph [ref=e200]: RedPajama 12B
+                - paragraph [ref=e201]: RedPajama / bf16 / 2,048 ctx
+              - generic [ref=e202]: 24 GB
+          - button "Code Llama 34B CodeLlama / bf16 / 16,384 ctx 68 GB" [disabled] [ref=e203]:
+            - generic [ref=e204]:
+              - generic [ref=e205]:
+                - paragraph [ref=e206]: Code Llama 34B
+                - paragraph [ref=e207]: CodeLlama / bf16 / 16,384 ctx
+              - generic [ref=e208]: 68 GB
+          - button "Code Llama 13B CodeLlama / bf16 / 16,384 ctx 26 GB" [disabled] [ref=e209]:
+            - generic [ref=e210]:
+              - generic [ref=e211]:
+                - paragraph [ref=e212]: Code Llama 13B
+                - paragraph [ref=e213]: CodeLlama / bf16 / 16,384 ctx
+              - generic [ref=e214]: 26 GB
+          - button "Code Llama 7B CodeLlama / bf16 / 16,384 ctx 14 GB" [disabled] [ref=e215]:
+            - generic [ref=e216]:
+              - generic [ref=e217]:
+                - paragraph [ref=e218]: Code Llama 7B
+                - paragraph [ref=e219]: CodeLlama / bf16 / 16,384 ctx
+              - generic [ref=e220]: 14 GB
+          - button "DeepSeek Coder 33B DeepSeek / bf16 / 16,384 ctx 66 GB" [disabled] [ref=e221]:
+            - generic [ref=e222]:
+              - generic [ref=e223]:
+                - paragraph [ref=e224]: DeepSeek Coder 33B
+                - paragraph [ref=e225]: DeepSeek / bf16 / 16,384 ctx
+              - generic [ref=e226]: 66 GB
+          - button "DeepSeek Coder 6.7B DeepSeek / bf16 / 16,384 ctx 13.4 GB" [disabled] [ref=e227]:
+            - generic [ref=e228]:
+              - generic [ref=e229]:
+                - paragraph [ref=e230]: DeepSeek Coder 6.7B
+                - paragraph [ref=e231]: DeepSeek / bf16 / 16,384 ctx
+              - generic [ref=e232]: 13.4 GB
+          - button "Alpaca 7B Alpaca / bf16 / 512 ctx 14 GB" [disabled] [ref=e233]:
+            - generic [ref=e234]:
+              - generic [ref=e235]:
+                - paragraph [ref=e236]: Alpaca 7B
+                - paragraph [ref=e237]: Alpaca / bf16 / 512 ctx
+              - generic [ref=e238]: 14 GB
+          - button "Guanaco 7B Guanaco / bf16 / 2,048 ctx 14 GB" [disabled] [ref=e239]:
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - paragraph [ref=e242]: Guanaco 7B
+                - paragraph [ref=e243]: Guanaco / bf16 / 2,048 ctx
+              - generic [ref=e244]: 14 GB
+          - button "Falcon 40B Falcon / bf16 / 2,048 ctx 80 GB" [disabled] [ref=e245]:
+            - generic [ref=e246]:
+              - generic [ref=e247]:
+                - paragraph [ref=e248]: Falcon 40B
+                - paragraph [ref=e249]: Falcon / bf16 / 2,048 ctx
+              - generic [ref=e250]: 80 GB
+          - button "Falcon 7B Falcon / bf16 / 2,048 ctx 14 GB" [disabled] [ref=e251]:
+            - generic [ref=e252]:
+              - generic [ref=e253]:
+                - paragraph [ref=e254]: Falcon 7B
+                - paragraph [ref=e255]: Falcon / bf16 / 2,048 ctx
+              - generic [ref=e256]: 14 GB
+          - button "BERT Base BERT / fp16 / 512 ctx 0.25 GB" [disabled] [ref=e257]:
+            - generic [ref=e258]:
+              - generic [ref=e259]:
+                - paragraph [ref=e260]: BERT Base
+                - paragraph [ref=e261]: BERT / fp16 / 512 ctx
+              - generic [ref=e262]: 0.25 GB
+          - button "RoBERTa Large RoBERTa / fp16 / 512 ctx 0.7 GB" [disabled] [ref=e263]:
+            - generic [ref=e264]:
+              - generic [ref=e265]:
+                - paragraph [ref=e266]: RoBERTa Large
+                - paragraph [ref=e267]: RoBERTa / fp16 / 512 ctx
+              - generic [ref=e268]: 0.7 GB
+          - button "Sentence Transformers SentenceTransformers / fp16 / 128 ctx 0.3 GB" [disabled] [ref=e269]:
+            - generic [ref=e270]:
+              - generic [ref=e271]:
+                - paragraph [ref=e272]: Sentence Transformers
+                - paragraph [ref=e273]: SentenceTransformers / fp16 / 128 ctx
+              - generic [ref=e274]: 0.3 GB
+          - button "Stable Diffusion XL StableDiffusion / fp16 / 0 ctx 8 GB" [disabled] [ref=e275]:
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - paragraph [ref=e278]: Stable Diffusion XL
+                - paragraph [ref=e279]: StableDiffusion / fp16 / 0 ctx
+              - generic [ref=e280]: 8 GB
+          - button "Stable Diffusion 1.5 StableDiffusion / fp16 / 0 ctx 4 GB" [disabled] [ref=e281]:
+            - generic [ref=e282]:
+              - generic [ref=e283]:
+                - paragraph [ref=e284]: Stable Diffusion 1.5
+                - paragraph [ref=e285]: StableDiffusion / fp16 / 0 ctx
+              - generic [ref=e286]: 4 GB
+          - button "Stable Diffusion 3 StableDiffusion / fp16 / 0 ctx 12 GB" [disabled] [ref=e287]:
+            - generic [ref=e288]:
+              - generic [ref=e289]:
+                - paragraph [ref=e290]: Stable Diffusion 3
+                - paragraph [ref=e291]: StableDiffusion / fp16 / 0 ctx
+              - generic [ref=e292]: 12 GB
+          - button "FLUX.1 FLUX / fp8 / 0 ctx 18 GB" [disabled] [ref=e293]:
+            - generic [ref=e294]:
+              - generic [ref=e295]:
+                - paragraph [ref=e296]: FLUX.1
+                - paragraph [ref=e297]: FLUX / fp8 / 0 ctx
+              - generic [ref=e298]: 18 GB
+          - button "FLUX.1 Dev FLUX / bf16 / 0 ctx 36 GB" [disabled] [ref=e299]:
+            - generic [ref=e300]:
+              - generic [ref=e301]:
+                - paragraph [ref=e302]: FLUX.1 Dev
+                - paragraph [ref=e303]: FLUX / bf16 / 0 ctx
+              - generic [ref=e304]: 36 GB
+          - button "FLUX.1 Schnell FLUX / bf16 / 0 ctx 16 GB" [disabled] [ref=e305]:
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - paragraph [ref=e308]: FLUX.1 Schnell
+                - paragraph [ref=e309]: FLUX / bf16 / 0 ctx
+              - generic [ref=e310]: 16 GB
+      - generic [ref=e311]:
+        - generic [ref=e312]:
+          - heading "Planned Loads" [level=2] [ref=e313]
+          - generic [ref=e314]: "0"
+        - paragraph [ref=e316]: Select a GPU, then add models from the catalog.
+    - main [ref=e317]:
+      - generic [ref=e318]:
+        - generic [ref=e319]:
+          - generic [ref=e320]:
+            - paragraph [ref=e321]: Machine View
+            - heading "Simulated VRAM allocation" [level=2] [ref=e322]
+            - paragraph [ref=e323]:
+              - text: Use planning mode for proposed model placement. Switch to live mode to inspect the current host if the container can execute
+              - code [ref=e324]: nvidia-smi
+              - text: .
+          - generic [ref=e325]:
+            - button "Plan" [ref=e326]
+            - button "Live host" [ref=e327]
+        - generic [ref=e329]:
+          - paragraph [ref=e330]: Select a GPU to start planning.
+          - paragraph [ref=e331]: The planner reserves 5% overhead and stacks model allocations into the remaining VRAM.
+  - button "Open Next.js Dev Tools" [ref=e337] [cursor=pointer]:
+    - img [ref=e338]
+  - alert [ref=e341]

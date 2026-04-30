@@ -1,4 +1,4 @@
-# GPU Partitioner
+# VRAM Planner
 
 A Next.js web app for planning GPU VRAM allocation before loading model weights, with an optional live view of the host's NVIDIA GPU memory state.
 
@@ -25,14 +25,14 @@ Open `http://localhost:3000`.
 Build and run without GPU access (plan mode only):
 
 ```bash
-docker build -t gpu-partitioner .
-docker run --rm -p 3000:3000 gpu-partitioner
+docker build -t vram-planner .
+docker run --rm -p 3000:3000 vram-planner
 ```
 
 Enable the live view by passing the NVIDIA runtime and all GPUs:
 
 ```bash
-docker run --rm --gpus all -p 3000:3000 gpu-partitioner
+docker run --rm --gpus all -p 3000:3000 vram-planner
 ```
 
 If `nvidia-smi` is unavailable the app still works — live mode shows an error message and plan mode is unaffected.

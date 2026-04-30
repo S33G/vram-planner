@@ -1,0 +1,672 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - paragraph [ref=e5]: VRAM Planner
+        - heading "Plan model placement before loading weights." [level=1] [ref=e6]
+        - paragraph [ref=e7]: Pick a target GPU, add models, and compare the simulated plan with live NVIDIA GPU memory when available.
+      - generic [ref=e8]:
+        - text: Target GPU
+        - combobox "Target GPU" [ref=e9]:
+          - option "Select a GPU"
+          - option "NVIDIA H100 80GB"
+          - option "NVIDIA H100 40GB SXM"
+          - option "NVIDIA A100 80GB"
+          - option "NVIDIA A100 40GB"
+          - option "NVIDIA RTX Ada 6000 48GB"
+          - option "NVIDIA RTX 4090 24GB" [selected]
+          - option "NVIDIA RTX 4080 Super 16GB"
+          - option "NVIDIA RTX 4080 12GB"
+          - option "NVIDIA RTX 4070 Super 12GB"
+          - option "NVIDIA RTX 4060 Ti 16GB"
+          - option "NVIDIA RTX 4060 Ti 8GB"
+          - option "NVIDIA RTX 4060 8GB"
+          - option "NVIDIA RTX 3090 24GB"
+          - option "NVIDIA RTX 3080 10GB"
+          - option "NVIDIA RTX 3080 12GB"
+          - option "NVIDIA RTX 3070 8GB"
+          - option "NVIDIA RTX 3060 12GB"
+          - option "NVIDIA RTX 3060 12GB (rev)"
+          - option "NVIDIA L40S 48GB"
+          - option "NVIDIA L4 24GB"
+          - option "NVIDIA T4 16GB"
+          - option "NVIDIA V100 32GB"
+          - option "NVIDIA V100 16GB"
+          - option "NVIDIA V100 12GB"
+          - option "AMD MI300X 192GB"
+          - option "AMD MI250X 128GB"
+          - option "AMD MI250 64GB"
+          - option "AMD MI100 32GB"
+          - option "AMD RX 7900 XTX 24GB"
+          - option "AMD RX 7900 XT 20GB"
+          - option "AMD RX 7900 GRE 16GB"
+          - option "AMD RX 7800 XT 16GB"
+          - option "AMD RX 7700 XT 12GB"
+          - option "AMD RX 6900 XT 16GB"
+          - option "AMD RX 6800 XT 16GB"
+          - option "Apple M4 Max 24GB"
+          - option "Apple M4 Max 32GB"
+          - option "Apple M3 Max 18GB"
+          - option "Apple M3 Max 36GB"
+          - option "Apple M2 Ultra 16GB"
+          - option "Apple M2 Ultra 64GB"
+          - option "Apple M2 Ultra 192GB"
+        - generic [ref=e449]:
+          - generic [ref=e450]:
+            - paragraph [ref=e451]: VRAM
+            - paragraph [ref=e452]: 24 GB
+          - generic [ref=e453]:
+            - paragraph [ref=e454]: Used
+            - paragraph [ref=e455]: 0.0 GB
+          - generic [ref=e456]:
+            - paragraph [ref=e457]: Free
+            - paragraph [ref=e458]: 24.0 GB
+        - generic [ref=e10]:
+          - generic [ref=e11]:
+            - generic [ref=e12]: System RAM (GB)
+            - spinbutton [ref=e13]: "64"
+          - generic [ref=e14]:
+            - generic [ref=e15]: Spill strategy
+            - combobox [ref=e16]:
+              - option "Avoid spill" [selected]
+              - option "Allow RAM spill"
+        - generic [ref=e677]:
+          - generic [ref=e678]:
+            - generic [ref=e679]: Name
+            - textbox "e.g. My RTX 5090" [ref=e680]
+          - generic [ref=e681]:
+            - generic [ref=e682]:
+              - generic [ref=e683]: Vendor
+              - combobox [ref=e684]:
+                - option "NVIDIA" [selected]
+                - option "AMD"
+                - option "Apple"
+            - generic [ref=e685]:
+              - generic [ref=e686]: VRAM (GB)
+              - spinbutton [ref=e687]
+            - generic [ref=e688]:
+              - generic [ref=e689]: Bandwidth (GB/s)
+              - spinbutton [ref=e690]
+            - generic [ref=e691]:
+              - generic [ref=e692]: TDP (W)
+              - spinbutton [ref=e693]
+          - generic [ref=e694]:
+            - button "Add GPU" [ref=e695]
+            - button "Cancel" [ref=e696]
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - heading "Model Catalog" [level=2] [ref=e20]
+          - generic [ref=e21]: 49 matches
+        - textbox "Search model, family, tag" [ref=e22]
+        - combobox [ref=e23]:
+          - option "All families" [selected]
+          - option "Alpaca"
+          - option "BERT"
+          - option "CodeLlama"
+          - option "DeepSeek"
+          - option "Dolly"
+          - option "FLUX"
+          - option "Falcon"
+          - option "Gemma"
+          - option "Guanaco"
+          - option "Llama"
+          - option "Mistral"
+          - option "Phi"
+          - option "Qwen"
+          - option "RedPajama"
+          - option "RoBERTa"
+          - option "SentenceTransformers"
+          - option "Stable"
+          - option "StableDiffusion"
+        - generic:
+          - button "Qwen 2.5 72B won't fit Qwen / bf16 / 131,072 ctx 144.0 weights · 43.5 KV · 4.0 headroom = 191.5 GB total 191.5 GB" [ref=e459]:
+            - generic [ref=e27]:
+              - generic [ref=e28]:
+                - generic [ref=e29]:
+                  - paragraph [ref=e30]: Qwen 2.5 72B
+                  - generic [ref=e460]: won't fit
+                - paragraph [ref=e31]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e461]:
+                  - text: 144.0 weights · 43.5 KV · 4.0 headroom =
+                  - generic [ref=e462]: 191.5 GB total
+              - generic [ref=e32]: 191.5 GB
+          - button "Qwen 2.5 32B won't fit Qwen / bf16 / 131,072 ctx 64.0 weights · 20.5 KV · 3.0 headroom = 87.5 GB total 87.5 GB" [ref=e463]:
+            - generic [ref=e35]:
+              - generic [ref=e36]:
+                - generic [ref=e37]:
+                  - paragraph [ref=e38]: Qwen 2.5 32B
+                  - generic [ref=e464]: won't fit
+                - paragraph [ref=e39]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e465]:
+                  - text: 64.0 weights · 20.5 KV · 3.0 headroom =
+                  - generic [ref=e466]: 87.5 GB total
+              - generic [ref=e40]: 87.5 GB
+          - button "Qwen 2.5 14B won't fit Qwen / bf16 / 131,072 ctx 28.0 weights · 10.2 KV · 2.0 headroom = 40.2 GB total 40.2 GB" [ref=e467]:
+            - generic [ref=e43]:
+              - generic [ref=e44]:
+                - generic [ref=e45]:
+                  - paragraph [ref=e46]: Qwen 2.5 14B
+                  - generic [ref=e468]: won't fit
+                - paragraph [ref=e47]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e469]:
+                  - text: 28.0 weights · 10.2 KV · 2.0 headroom =
+                  - generic [ref=e470]: 40.2 GB total
+              - generic [ref=e48]: 40.2 GB
+          - button "Qwen 2.5 7B Qwen / bf16 / 131,072 ctx 14.0 weights · 7.7 KV · 2.0 headroom = 23.7 GB total 23.7 GB" [ref=e471]:
+            - generic [ref=e51]:
+              - generic [ref=e52]:
+                - paragraph [ref=e54]: Qwen 2.5 7B
+                - paragraph [ref=e55]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e472]:
+                  - text: 14.0 weights · 7.7 KV · 2.0 headroom =
+                  - generic [ref=e473]: 23.7 GB total
+              - generic [ref=e56]: 23.7 GB
+          - button "Qwen 2.5 3B Qwen / bf16 / 131,072 ctx 6.0 weights · 3.8 KV · 1.0 headroom = 10.8 GB total 10.8 GB" [ref=e474]:
+            - generic [ref=e59]:
+              - generic [ref=e60]:
+                - paragraph [ref=e62]: Qwen 2.5 3B
+                - paragraph [ref=e63]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e475]:
+                  - text: 6.0 weights · 3.8 KV · 1.0 headroom =
+                  - generic [ref=e476]: 10.8 GB total
+              - generic [ref=e64]: 10.8 GB
+          - button "Qwen 2.5 1.5B Qwen / bf16 / 131,072 ctx 3.0 weights · 2.6 KV · 1.0 headroom = 6.6 GB total 6.6 GB" [ref=e477]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - paragraph [ref=e70]: Qwen 2.5 1.5B
+                - paragraph [ref=e71]: Qwen / bf16 / 131,072 ctx
+                - paragraph [ref=e478]:
+                  - text: 3.0 weights · 2.6 KV · 1.0 headroom =
+                  - generic [ref=e479]: 6.6 GB total
+              - generic [ref=e72]: 6.6 GB
+          - button "Qwen 2.5 72B (Q4_K_M) won't fit Qwen / int4 / 131,072 ctx 40.0 weights · 21.8 KV · 3.0 headroom = 64.8 GB total 64.8 GB" [ref=e480]:
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - generic [ref=e77]:
+                  - paragraph [ref=e78]: Qwen 2.5 72B (Q4_K_M)
+                  - generic [ref=e481]: won't fit
+                - paragraph [ref=e79]: Qwen / int4 / 131,072 ctx
+                - paragraph [ref=e482]:
+                  - text: 40.0 weights · 21.8 KV · 3.0 headroom =
+                  - generic [ref=e483]: 64.8 GB total
+              - generic [ref=e80]: 64.8 GB
+          - button "Qwen 2.5 32B (Q4_K_M) won't fit Qwen / int4 / 131,072 ctx 20.0 weights · 10.2 KV · 2.0 headroom = 32.2 GB total 32.2 GB" [ref=e484]:
+            - generic [ref=e83]:
+              - generic [ref=e84]:
+                - generic [ref=e85]:
+                  - paragraph [ref=e86]: Qwen 2.5 32B (Q4_K_M)
+                  - generic [ref=e485]: won't fit
+                - paragraph [ref=e87]: Qwen / int4 / 131,072 ctx
+                - paragraph [ref=e486]:
+                  - text: 20.0 weights · 10.2 KV · 2.0 headroom =
+                  - generic [ref=e487]: 32.2 GB total
+              - generic [ref=e88]: 32.2 GB
+          - button "Llama 3.3 70B won't fit Llama / bf16 / 131,072 ctx 140.0 weights · 43.5 KV · 4.0 headroom = 187.5 GB total 187.5 GB" [ref=e488]:
+            - generic [ref=e91]:
+              - generic [ref=e92]:
+                - generic [ref=e93]:
+                  - paragraph [ref=e94]: Llama 3.3 70B
+                  - generic [ref=e489]: won't fit
+                - paragraph [ref=e95]: Llama / bf16 / 131,072 ctx
+                - paragraph [ref=e490]:
+                  - text: 140.0 weights · 43.5 KV · 4.0 headroom =
+                  - generic [ref=e491]: 187.5 GB total
+              - generic [ref=e96]: 187.5 GB
+          - button "Llama 3.1 8B won't fit Llama / bf16 / 131,072 ctx 16.0 weights · 7.7 KV · 2.0 headroom = 25.7 GB total 25.7 GB" [ref=e492]:
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - generic [ref=e101]:
+                  - paragraph [ref=e102]: Llama 3.1 8B
+                  - generic [ref=e493]: won't fit
+                - paragraph [ref=e103]: Llama / bf16 / 131,072 ctx
+                - paragraph [ref=e494]:
+                  - text: 16.0 weights · 7.7 KV · 2.0 headroom =
+                  - generic [ref=e495]: 25.7 GB total
+              - generic [ref=e104]: 25.7 GB
+          - button "Llama 3.1 70B won't fit Llama / bf16 / 131,072 ctx 140.0 weights · 43.5 KV · 4.0 headroom = 187.5 GB total 187.5 GB" [ref=e496]:
+            - generic [ref=e107]:
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - paragraph [ref=e110]: Llama 3.1 70B
+                  - generic [ref=e497]: won't fit
+                - paragraph [ref=e111]: Llama / bf16 / 131,072 ctx
+                - paragraph [ref=e498]:
+                  - text: 140.0 weights · 43.5 KV · 4.0 headroom =
+                  - generic [ref=e499]: 187.5 GB total
+              - generic [ref=e112]: 187.5 GB
+          - button "Llama 3.1 70B (Q4_K_M) won't fit Llama / int4 / 131,072 ctx 38.0 weights · 21.8 KV · 3.0 headroom = 62.8 GB total 62.8 GB" [ref=e500]:
+            - generic [ref=e115]:
+              - generic [ref=e116]:
+                - generic [ref=e117]:
+                  - paragraph [ref=e118]: Llama 3.1 70B (Q4_K_M)
+                  - generic [ref=e501]: won't fit
+                - paragraph [ref=e119]: Llama / int4 / 131,072 ctx
+                - paragraph [ref=e502]:
+                  - text: 38.0 weights · 21.8 KV · 3.0 headroom =
+                  - generic [ref=e503]: 62.8 GB total
+              - generic [ref=e120]: 62.8 GB
+          - button "Llama 3.1 8B (Q4_K_M) Llama / int4 / 131,072 ctx 5.0 weights · 3.8 KV · 1.0 headroom = 9.8 GB total 9.8 GB" [ref=e504]:
+            - generic [ref=e123]:
+              - generic [ref=e124]:
+                - paragraph [ref=e126]: Llama 3.1 8B (Q4_K_M)
+                - paragraph [ref=e127]: Llama / int4 / 131,072 ctx
+                - paragraph [ref=e505]:
+                  - text: 5.0 weights · 3.8 KV · 1.0 headroom =
+                  - generic [ref=e506]: 9.8 GB total
+              - generic [ref=e128]: 9.8 GB
+          - button "Llama 3 8B Llama / bf16 / 8,192 ctx 16.0 weights · 0.5 KV · 2.0 headroom = 18.5 GB total 18.5 GB" [ref=e507]:
+            - generic [ref=e131]:
+              - generic [ref=e132]:
+                - paragraph [ref=e134]: Llama 3 8B
+                - paragraph [ref=e135]: Llama / bf16 / 8,192 ctx
+                - paragraph [ref=e508]:
+                  - text: 16.0 weights · 0.5 KV · 2.0 headroom =
+                  - generic [ref=e509]: 18.5 GB total
+              - generic [ref=e136]: 18.5 GB
+          - button "Mistral Large won't fit Mistral / bf16 / 131,072 ctx 246.0 weights · 64.0 KV · 5.0 headroom = 315.0 GB total 315.0 GB" [ref=e510]:
+            - generic [ref=e139]:
+              - generic [ref=e140]:
+                - generic [ref=e141]:
+                  - paragraph [ref=e142]: Mistral Large
+                  - generic [ref=e511]: won't fit
+                - paragraph [ref=e143]: Mistral / bf16 / 131,072 ctx
+                - paragraph [ref=e512]:
+                  - text: 246.0 weights · 64.0 KV · 5.0 headroom =
+                  - generic [ref=e513]: 315.0 GB total
+              - generic [ref=e144]: 315.0 GB
+          - button "Mistral Small won't fit Mistral / bf16 / 32,768 ctx 44.0 weights · 3.8 KV · 2.0 headroom = 49.8 GB total 49.8 GB" [ref=e514]:
+            - generic [ref=e147]:
+              - generic [ref=e148]:
+                - generic [ref=e149]:
+                  - paragraph [ref=e150]: Mistral Small
+                  - generic [ref=e515]: won't fit
+                - paragraph [ref=e151]: Mistral / bf16 / 32,768 ctx
+                - paragraph [ref=e516]:
+                  - text: 44.0 weights · 3.8 KV · 2.0 headroom =
+                  - generic [ref=e517]: 49.8 GB total
+              - generic [ref=e152]: 49.8 GB
+          - button "Mistral 7B Mistral / bf16 / 32,768 ctx 14.0 weights · 1.9 KV · 2.0 headroom = 17.9 GB total 17.9 GB" [ref=e518]:
+            - generic [ref=e155]:
+              - generic [ref=e156]:
+                - paragraph [ref=e158]: Mistral 7B
+                - paragraph [ref=e159]: Mistral / bf16 / 32,768 ctx
+                - paragraph [ref=e519]:
+                  - text: 14.0 weights · 1.9 KV · 2.0 headroom =
+                  - generic [ref=e520]: 17.9 GB total
+              - generic [ref=e160]: 17.9 GB
+          - button "Mistral 7B (Q4_K_M) Mistral / int4 / 32,768 ctx 4.0 weights · 1.0 KV · 1.0 headroom = 6.0 GB total 6.0 GB" [ref=e521]:
+            - generic [ref=e163]:
+              - generic [ref=e164]:
+                - paragraph [ref=e166]: Mistral 7B (Q4_K_M)
+                - paragraph [ref=e167]: Mistral / int4 / 32,768 ctx
+                - paragraph [ref=e522]:
+                  - text: 4.0 weights · 1.0 KV · 1.0 headroom =
+                  - generic [ref=e523]: 6.0 GB total
+              - generic [ref=e168]: 6.0 GB
+          - button "Mixtral 8x7B won't fit Mistral / bf16 / 32,768 ctx 94.0 weights · 7.7 KV · 4.0 headroom = 105.7 GB total 105.7 GB" [ref=e524]:
+            - generic [ref=e171]:
+              - generic [ref=e172]:
+                - generic [ref=e173]:
+                  - paragraph [ref=e174]: Mixtral 8x7B
+                  - generic [ref=e525]: won't fit
+                - paragraph [ref=e175]: Mistral / bf16 / 32,768 ctx
+                - paragraph [ref=e526]:
+                  - text: 94.0 weights · 7.7 KV · 4.0 headroom =
+                  - generic [ref=e527]: 105.7 GB total
+              - generic [ref=e176]: 105.7 GB
+          - button "Mixtral 8x22B won't fit Mistral / bf16 / 65,536 ctx 282.0 weights · 32.0 KV · 5.0 headroom = 319.0 GB total 319.0 GB" [ref=e528]:
+            - generic [ref=e179]:
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - paragraph [ref=e182]: Mixtral 8x22B
+                  - generic [ref=e529]: won't fit
+                - paragraph [ref=e183]: Mistral / bf16 / 65,536 ctx
+                - paragraph [ref=e530]:
+                  - text: 282.0 weights · 32.0 KV · 5.0 headroom =
+                  - generic [ref=e531]: 319.0 GB total
+              - generic [ref=e184]: 319.0 GB
+          - button "Phi-3 Mini Phi / bf16 / 128,000 ctx 7.6 weights · 3.8 KV · 1.0 headroom = 12.3 GB total 12.3 GB" [ref=e532]:
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - paragraph [ref=e190]: Phi-3 Mini
+                - paragraph [ref=e191]: Phi / bf16 / 128,000 ctx
+                - paragraph [ref=e533]:
+                  - text: 7.6 weights · 3.8 KV · 1.0 headroom =
+                  - generic [ref=e534]: 12.3 GB total
+              - generic [ref=e192]: 12.3 GB
+          - button "Phi-3 Small Phi / bf16 / 128,000 ctx 14.0 weights · 7.5 KV · 2.0 headroom = 23.5 GB total 23.5 GB" [ref=e535]:
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - paragraph [ref=e198]: Phi-3 Small
+                - paragraph [ref=e199]: Phi / bf16 / 128,000 ctx
+                - paragraph [ref=e536]:
+                  - text: 14.0 weights · 7.5 KV · 2.0 headroom =
+                  - generic [ref=e537]: 23.5 GB total
+              - generic [ref=e200]: 23.5 GB
+          - button "Phi-3 Medium won't fit Phi / bf16 / 128,000 ctx 28.0 weights · 10.0 KV · 2.0 headroom = 40.0 GB total 40.0 GB" [ref=e538]:
+            - generic [ref=e203]:
+              - generic [ref=e204]:
+                - generic [ref=e205]:
+                  - paragraph [ref=e206]: Phi-3 Medium
+                  - generic [ref=e539]: won't fit
+                - paragraph [ref=e207]: Phi / bf16 / 128,000 ctx
+                - paragraph [ref=e540]:
+                  - text: 28.0 weights · 10.0 KV · 2.0 headroom =
+                  - generic [ref=e541]: 40.0 GB total
+              - generic [ref=e208]: 40.0 GB
+          - button "Phi-3.5 Mini Phi / bf16 / 128,000 ctx 8.0 weights · 3.8 KV · 1.0 headroom = 12.8 GB total 12.8 GB" [ref=e542]:
+            - generic [ref=e211]:
+              - generic [ref=e212]:
+                - paragraph [ref=e214]: Phi-3.5 Mini
+                - paragraph [ref=e215]: Phi / bf16 / 128,000 ctx
+                - paragraph [ref=e543]:
+                  - text: 8.0 weights · 3.8 KV · 1.0 headroom =
+                  - generic [ref=e544]: 12.8 GB total
+              - generic [ref=e216]: 12.8 GB
+          - button "Gemma 2 27B won't fit Gemma / bf16 / 8,192 ctx 54.0 weights · 1.1 KV · 3.0 headroom = 58.1 GB total 58.1 GB" [ref=e545]:
+            - generic [ref=e219]:
+              - generic [ref=e220]:
+                - generic [ref=e221]:
+                  - paragraph [ref=e222]: Gemma 2 27B
+                  - generic [ref=e546]: won't fit
+                - paragraph [ref=e223]: Gemma / bf16 / 8,192 ctx
+                - paragraph [ref=e547]:
+                  - text: 54.0 weights · 1.1 KV · 3.0 headroom =
+                  - generic [ref=e548]: 58.1 GB total
+              - generic [ref=e224]: 58.1 GB
+          - button "Gemma 2 9B Gemma / bf16 / 8,192 ctx 18.0 weights · 0.6 KV · 2.0 headroom = 20.6 GB total 20.6 GB" [ref=e549]:
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - paragraph [ref=e230]: Gemma 2 9B
+                - paragraph [ref=e231]: Gemma / bf16 / 8,192 ctx
+                - paragraph [ref=e550]:
+                  - text: 18.0 weights · 0.6 KV · 2.0 headroom =
+                  - generic [ref=e551]: 20.6 GB total
+              - generic [ref=e232]: 20.6 GB
+          - button "Gemma 2 2B Gemma / bf16 / 4,096 ctx 5.2 weights · 0.1 KV · 1.0 headroom = 6.3 GB total 6.3 GB" [ref=e552]:
+            - generic [ref=e235]:
+              - generic [ref=e236]:
+                - paragraph [ref=e238]: Gemma 2 2B
+                - paragraph [ref=e239]: Gemma / bf16 / 4,096 ctx
+                - paragraph [ref=e553]:
+                  - text: 5.2 weights · 0.1 KV · 1.0 headroom =
+                  - generic [ref=e554]: 6.3 GB total
+              - generic [ref=e240]: 6.3 GB
+          - button "Stable Code 3B Stable / bf16 / 16,384 ctx 6.0 weights · 0.3 KV · 1.0 headroom = 7.3 GB total 7.3 GB" [ref=e555]:
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - paragraph [ref=e246]: Stable Code 3B
+                - paragraph [ref=e247]: Stable / bf16 / 16,384 ctx
+                - paragraph [ref=e556]:
+                  - text: 6.0 weights · 0.3 KV · 1.0 headroom =
+                  - generic [ref=e557]: 7.3 GB total
+              - generic [ref=e248]: 7.3 GB
+          - button "Stable LM 12B won't fit Stable / bf16 / 4,096 ctx 24.0 weights · 0.3 KV · 2.0 headroom = 26.3 GB total 26.3 GB" [ref=e558]:
+            - generic [ref=e251]:
+              - generic [ref=e252]:
+                - generic [ref=e253]:
+                  - paragraph [ref=e254]: Stable LM 12B
+                  - generic [ref=e559]: won't fit
+                - paragraph [ref=e255]: Stable / bf16 / 4,096 ctx
+                - paragraph [ref=e560]:
+                  - text: 24.0 weights · 0.3 KV · 2.0 headroom =
+                  - generic [ref=e561]: 26.3 GB total
+              - generic [ref=e256]: 26.3 GB
+          - button "Dolly 12B won't fit Dolly / bf16 / 2,048 ctx 24.0 weights · 0.1 KV · 2.0 headroom = 26.1 GB total 26.1 GB" [ref=e562]:
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - generic [ref=e261]:
+                  - paragraph [ref=e262]: Dolly 12B
+                  - generic [ref=e563]: won't fit
+                - paragraph [ref=e263]: Dolly / bf16 / 2,048 ctx
+                - paragraph [ref=e564]:
+                  - text: 24.0 weights · 0.1 KV · 2.0 headroom =
+                  - generic [ref=e565]: 26.1 GB total
+              - generic [ref=e264]: 26.1 GB
+          - button "RedPajama 12B won't fit RedPajama / bf16 / 2,048 ctx 24.0 weights · 0.1 KV · 2.0 headroom = 26.1 GB total 26.1 GB" [ref=e566]:
+            - generic [ref=e267]:
+              - generic [ref=e268]:
+                - generic [ref=e269]:
+                  - paragraph [ref=e270]: RedPajama 12B
+                  - generic [ref=e567]: won't fit
+                - paragraph [ref=e271]: RedPajama / bf16 / 2,048 ctx
+                - paragraph [ref=e568]:
+                  - text: 24.0 weights · 0.1 KV · 2.0 headroom =
+                  - generic [ref=e569]: 26.1 GB total
+              - generic [ref=e272]: 26.1 GB
+          - button "Code Llama 34B won't fit CodeLlama / bf16 / 16,384 ctx 68.0 weights · 3.2 KV · 3.0 headroom = 74.2 GB total 74.2 GB" [ref=e570]:
+            - generic [ref=e275]:
+              - generic [ref=e276]:
+                - generic [ref=e277]:
+                  - paragraph [ref=e278]: Code Llama 34B
+                  - generic [ref=e571]: won't fit
+                - paragraph [ref=e279]: CodeLlama / bf16 / 16,384 ctx
+                - paragraph [ref=e572]:
+                  - text: 68.0 weights · 3.2 KV · 3.0 headroom =
+                  - generic [ref=e573]: 74.2 GB total
+              - generic [ref=e280]: 74.2 GB
+          - button "Code Llama 13B won't fit CodeLlama / bf16 / 16,384 ctx 26.0 weights · 1.6 KV · 2.0 headroom = 29.6 GB total 29.6 GB" [ref=e574]:
+            - generic [ref=e283]:
+              - generic [ref=e284]:
+                - generic [ref=e285]:
+                  - paragraph [ref=e286]: Code Llama 13B
+                  - generic [ref=e575]: won't fit
+                - paragraph [ref=e287]: CodeLlama / bf16 / 16,384 ctx
+                - paragraph [ref=e576]:
+                  - text: 26.0 weights · 1.6 KV · 2.0 headroom =
+                  - generic [ref=e577]: 29.6 GB total
+              - generic [ref=e288]: 29.6 GB
+          - button "Code Llama 7B CodeLlama / bf16 / 16,384 ctx 14.0 weights · 1.0 KV · 2.0 headroom = 17.0 GB total 17.0 GB" [ref=e578]:
+            - generic [ref=e291]:
+              - generic [ref=e292]:
+                - paragraph [ref=e294]: Code Llama 7B
+                - paragraph [ref=e295]: CodeLlama / bf16 / 16,384 ctx
+                - paragraph [ref=e579]:
+                  - text: 14.0 weights · 1.0 KV · 2.0 headroom =
+                  - generic [ref=e580]: 17.0 GB total
+              - generic [ref=e296]: 17.0 GB
+          - button "DeepSeek Coder 33B won't fit DeepSeek / bf16 / 16,384 ctx 66.0 weights · 3.2 KV · 3.0 headroom = 72.2 GB total 72.2 GB" [ref=e581]:
+            - generic [ref=e299]:
+              - generic [ref=e300]:
+                - generic [ref=e301]:
+                  - paragraph [ref=e302]: DeepSeek Coder 33B
+                  - generic [ref=e582]: won't fit
+                - paragraph [ref=e303]: DeepSeek / bf16 / 16,384 ctx
+                - paragraph [ref=e583]:
+                  - text: 66.0 weights · 3.2 KV · 3.0 headroom =
+                  - generic [ref=e584]: 72.2 GB total
+              - generic [ref=e304]: 72.2 GB
+          - button "DeepSeek Coder 6.7B DeepSeek / bf16 / 16,384 ctx 13.4 weights · 1.0 KV · 2.0 headroom = 16.4 GB total 16.4 GB" [ref=e585]:
+            - generic [ref=e307]:
+              - generic [ref=e308]:
+                - paragraph [ref=e310]: DeepSeek Coder 6.7B
+                - paragraph [ref=e311]: DeepSeek / bf16 / 16,384 ctx
+                - paragraph [ref=e586]:
+                  - text: 13.4 weights · 1.0 KV · 2.0 headroom =
+                  - generic [ref=e587]: 16.4 GB total
+              - generic [ref=e312]: 16.4 GB
+          - button "Alpaca 7B Alpaca / bf16 / 512 ctx 14.0 weights · 0.0 KV · 2.0 headroom = 16.0 GB total 16.0 GB" [ref=e588]:
+            - generic [ref=e315]:
+              - generic [ref=e316]:
+                - paragraph [ref=e318]: Alpaca 7B
+                - paragraph [ref=e319]: Alpaca / bf16 / 512 ctx
+                - paragraph [ref=e589]:
+                  - text: 14.0 weights · 0.0 KV · 2.0 headroom =
+                  - generic [ref=e590]: 16.0 GB total
+              - generic [ref=e320]: 16.0 GB
+          - button "Guanaco 7B Guanaco / bf16 / 2,048 ctx 14.0 weights · 0.1 KV · 2.0 headroom = 16.1 GB total 16.1 GB" [ref=e591]:
+            - generic [ref=e323]:
+              - generic [ref=e324]:
+                - paragraph [ref=e326]: Guanaco 7B
+                - paragraph [ref=e327]: Guanaco / bf16 / 2,048 ctx
+                - paragraph [ref=e592]:
+                  - text: 14.0 weights · 0.1 KV · 2.0 headroom =
+                  - generic [ref=e593]: 16.1 GB total
+              - generic [ref=e328]: 16.1 GB
+          - button "Falcon 40B won't fit Falcon / bf16 / 2,048 ctx 80.0 weights · 0.4 KV · 3.0 headroom = 83.4 GB total 83.4 GB" [ref=e594]:
+            - generic [ref=e331]:
+              - generic [ref=e332]:
+                - generic [ref=e333]:
+                  - paragraph [ref=e334]: Falcon 40B
+                  - generic [ref=e595]: won't fit
+                - paragraph [ref=e335]: Falcon / bf16 / 2,048 ctx
+                - paragraph [ref=e596]:
+                  - text: 80.0 weights · 0.4 KV · 3.0 headroom =
+                  - generic [ref=e597]: 83.4 GB total
+              - generic [ref=e336]: 83.4 GB
+          - button "Falcon 7B Falcon / bf16 / 2,048 ctx 14.0 weights · 0.1 KV · 2.0 headroom = 16.1 GB total 16.1 GB" [ref=e598]:
+            - generic [ref=e339]:
+              - generic [ref=e340]:
+                - paragraph [ref=e342]: Falcon 7B
+                - paragraph [ref=e343]: Falcon / bf16 / 2,048 ctx
+                - paragraph [ref=e599]:
+                  - text: 14.0 weights · 0.1 KV · 2.0 headroom =
+                  - generic [ref=e600]: 16.1 GB total
+              - generic [ref=e344]: 16.1 GB
+          - button "BERT Base BERT / fp16 / 512 ctx 0.3 weights · 0.5 headroom = 0.8 GB total 0.8 GB" [ref=e601]:
+            - generic [ref=e347]:
+              - generic [ref=e348]:
+                - paragraph [ref=e350]: BERT Base
+                - paragraph [ref=e351]: BERT / fp16 / 512 ctx
+                - paragraph [ref=e602]:
+                  - text: 0.3 weights · 0.5 headroom =
+                  - generic [ref=e603]: 0.8 GB total
+              - generic [ref=e352]: 0.8 GB
+          - button "RoBERTa Large RoBERTa / fp16 / 512 ctx 0.7 weights · 0.5 headroom = 1.2 GB total 1.2 GB" [ref=e604]:
+            - generic [ref=e355]:
+              - generic [ref=e356]:
+                - paragraph [ref=e358]: RoBERTa Large
+                - paragraph [ref=e359]: RoBERTa / fp16 / 512 ctx
+                - paragraph [ref=e605]:
+                  - text: 0.7 weights · 0.5 headroom =
+                  - generic [ref=e606]: 1.2 GB total
+              - generic [ref=e360]: 1.2 GB
+          - button "Sentence Transformers SentenceTransformers / fp16 / 128 ctx 0.3 weights · 0.5 headroom = 0.8 GB total 0.8 GB" [ref=e607]:
+            - generic [ref=e363]:
+              - generic [ref=e364]:
+                - paragraph [ref=e366]: Sentence Transformers
+                - paragraph [ref=e367]: SentenceTransformers / fp16 / 128 ctx
+                - paragraph [ref=e608]:
+                  - text: 0.3 weights · 0.5 headroom =
+                  - generic [ref=e609]: 0.8 GB total
+              - generic [ref=e368]: 0.8 GB
+          - button "Stable Diffusion XL StableDiffusion / fp16 / 0 ctx 8.0 weights · 2.0 headroom = 10.0 GB total 10.0 GB" [ref=e610]:
+            - generic [ref=e371]:
+              - generic [ref=e372]:
+                - paragraph [ref=e374]: Stable Diffusion XL
+                - paragraph [ref=e375]: StableDiffusion / fp16 / 0 ctx
+                - paragraph [ref=e611]:
+                  - text: 8.0 weights · 2.0 headroom =
+                  - generic [ref=e612]: 10.0 GB total
+              - generic [ref=e376]: 10.0 GB
+          - button "Stable Diffusion 1.5 StableDiffusion / fp16 / 0 ctx 4.0 weights · 1.0 headroom = 5.0 GB total 5.0 GB" [ref=e613]:
+            - generic [ref=e379]:
+              - generic [ref=e380]:
+                - paragraph [ref=e382]: Stable Diffusion 1.5
+                - paragraph [ref=e383]: StableDiffusion / fp16 / 0 ctx
+                - paragraph [ref=e614]:
+                  - text: 4.0 weights · 1.0 headroom =
+                  - generic [ref=e615]: 5.0 GB total
+              - generic [ref=e384]: 5.0 GB
+          - button "Stable Diffusion 3 StableDiffusion / fp16 / 0 ctx 12.0 weights · 2.0 headroom = 14.0 GB total 14.0 GB" [ref=e616]:
+            - generic [ref=e387]:
+              - generic [ref=e388]:
+                - paragraph [ref=e390]: Stable Diffusion 3
+                - paragraph [ref=e391]: StableDiffusion / fp16 / 0 ctx
+                - paragraph [ref=e617]:
+                  - text: 12.0 weights · 2.0 headroom =
+                  - generic [ref=e618]: 14.0 GB total
+              - generic [ref=e392]: 14.0 GB
+          - button "FLUX.1 FLUX / fp8 / 0 ctx 18.0 weights · 3.0 headroom = 21.0 GB total 21.0 GB" [ref=e619]:
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - paragraph [ref=e398]: FLUX.1
+                - paragraph [ref=e399]: FLUX / fp8 / 0 ctx
+                - paragraph [ref=e620]:
+                  - text: 18.0 weights · 3.0 headroom =
+                  - generic [ref=e621]: 21.0 GB total
+              - generic [ref=e400]: 21.0 GB
+          - button "FLUX.1 Dev won't fit FLUX / bf16 / 0 ctx 36.0 weights · 4.0 headroom = 40.0 GB total 40.0 GB" [ref=e622]:
+            - generic [ref=e403]:
+              - generic [ref=e404]:
+                - generic [ref=e405]:
+                  - paragraph [ref=e406]: FLUX.1 Dev
+                  - generic [ref=e623]: won't fit
+                - paragraph [ref=e407]: FLUX / bf16 / 0 ctx
+                - paragraph [ref=e624]:
+                  - text: 36.0 weights · 4.0 headroom =
+                  - generic [ref=e625]: 40.0 GB total
+              - generic [ref=e408]: 40.0 GB
+          - button "FLUX.1 Schnell FLUX / bf16 / 0 ctx 16.0 weights · 3.0 headroom = 19.0 GB total 19.0 GB" [ref=e626]:
+            - generic [ref=e411]:
+              - generic [ref=e412]:
+                - paragraph [ref=e414]: FLUX.1 Schnell
+                - paragraph [ref=e415]: FLUX / bf16 / 0 ctx
+                - paragraph [ref=e627]:
+                  - text: 16.0 weights · 3.0 headroom =
+                  - generic [ref=e628]: 19.0 GB total
+              - generic [ref=e416]: 19.0 GB
+        - button "+ Add custom model" [ref=e417]
+      - generic [ref=e418]:
+        - generic [ref=e419]:
+          - heading "Planned Loads" [level=2] [ref=e420]
+          - generic [ref=e421]: "0"
+        - paragraph [ref=e423]: Select a GPU, then add models from the catalog.
+    - main [ref=e424]:
+      - generic [ref=e425]:
+        - generic [ref=e426]:
+          - generic [ref=e427]:
+            - paragraph [ref=e428]: Machine View
+            - heading "Simulated VRAM allocation" [level=2] [ref=e429]
+            - paragraph [ref=e430]:
+              - text: Use planning mode for proposed model placement. Switch to live mode to inspect the current host if the container can execute
+              - code [ref=e431]: nvidia-smi
+              - text: .
+          - generic [ref=e432]:
+            - button "Plan" [ref=e433]
+            - button "Live host" [ref=e434]
+        - generic [ref=e435]:
+          - generic [ref=e436]:
+            - generic [ref=e629]:
+              - paragraph [ref=e630]: GPU used
+              - paragraph [ref=e631]: 0.0 GB
+            - generic [ref=e632]:
+              - paragraph [ref=e633]: GPU free
+              - paragraph [ref=e634]: 24.0 GB
+            - generic [ref=e635]:
+              - paragraph [ref=e636]: RAM spill
+              - paragraph [ref=e637]: 0.0 GB
+            - generic [ref=e638]:
+              - paragraph [ref=e639]: Fit status
+              - paragraph [ref=e640]: —
+          - generic [ref=e641]:
+            - generic [ref=e643]:
+              - generic [ref=e644]:
+                - generic [ref=e645]:
+                  - heading "NVIDIA RTX 4090 24GB" [level=3] [ref=e646]
+                  - paragraph [ref=e647]: 24 GB VRAM · 1008 GB/s · 450 W TDP
+                - generic [ref=e648]: —
+              - generic [ref=e649]:
+                - generic [ref=e651]: Free
+                - generic [ref=e652]:
+                  - generic [ref=e653]: Weights
+                  - generic [ref=e655]: KV cache
+                  - generic [ref=e657]: Headroom
+                  - generic [ref=e659]: Free
+              - generic [ref=e661]:
+                - generic [ref=e662]:
+                  - paragraph [ref=e663]: Capacity
+                  - paragraph [ref=e664]: 24 GB
+                - generic [ref=e665]:
+                  - paragraph [ref=e666]: Models
+                  - paragraph [ref=e667]: "0"
+                - generic [ref=e668]:
+                  - paragraph [ref=e669]: Utilization
+                  - paragraph [ref=e670]: 0%
+                - generic [ref=e671]:
+                  - paragraph [ref=e672]: Allocated
+                  - paragraph [ref=e673]: 0.0 GB
+            - paragraph [ref=e676]: Add models to see fit analysis, performance shape, and recommendations.
+  - button "Open Next.js Dev Tools" [ref=e444] [cursor=pointer]:
+    - img [ref=e445]
+  - alert [ref=e448]
