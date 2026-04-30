@@ -48,14 +48,15 @@ export function Sidebar({
   spillPolicy,
   setSpillPolicy,
 }: SidebarProps) {
-  const [customGpus, setCustomGpus] = useLocalStorage<GpuSpec[]>("custom-gpus", [])
-  const [customModels, setCustomModels] = useLocalStorage<ModelPreset[]>("custom-models", [])
+  const [customGpus, setCustomGpus, gpusHydrated] = useLocalStorage<GpuSpec[]>("custom-gpus", [])
+  const [customModels, setCustomModels, modelsHydrated] = useLocalStorage<ModelPreset[]>("custom-models", [])
   const [showGpuForm, setShowGpuForm] = useState(false)
   const [showModelForm, setShowModelForm] = useState(false)
   const [hideNoFit, setHideNoFit] = useState(true)
 
-  const allGpus = [...GPUs, ...customGpus]
-  const allModels = [...MODELS, ...customModels]
+  // Use empty arrays until hydrated so first client render matches server render
+  const allGpus = [...GPUs, ...(gpusHydrated ? customGpus : [])]
+  const allModels = [...MODELS, ...(modelsHydrated ? customModels : [])]
 
   const families = Array.from(new Set(allModels.map(m => m.family))).sort()
 
