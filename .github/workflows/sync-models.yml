@@ -19,8 +19,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v5
         with:
           run_install: false
       - name: Install dependencies
@@ -30,10 +30,22 @@ jobs:
              # Optional: set repo secret HF_TOKEN to access gated repos (Llama, Gemma, ...)
             HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: pnpm run sync:models
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- lib/models.generated.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to lib/models.generated.json; skipping tests and PR."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Detected changes to lib/models.generated.json."
+          fi
       - name: Run unit tests
+        if: steps.diff.outputs.changed == 'true'
         run: pnpm test
       - name: Open PR with refreshed model list
-        uses: peter-evans/create-pull-request@v6
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore: sync Hugging Face models"
           title: "chore: sync Hugging Face models"
