@@ -406,9 +406,10 @@ function PlanView({
                         </div>
                       </>
                     }
-                    className="flex h-full flex-1 items-center justify-center"
+                    className="flex h-full items-center justify-center"
+                    style={{ width: `${freePercent}%` }}
                   >
-                    <div className="flex h-full w-full items-center justify-center bg-emerald-500/15 text-xs font-medium text-emerald-200" style={{ width: `${freePercent}%` }}>
+                    <div className="flex h-full w-full items-center justify-center bg-emerald-500/15 text-xs font-medium text-emerald-200">
                       {freePercent > 8 ? "Free" : ""}
                     </div>
                   </Tooltip>
