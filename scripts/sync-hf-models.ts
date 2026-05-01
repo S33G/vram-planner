@@ -183,12 +183,34 @@ export function deriveTags(info: HfModelInfo, paramsB: number): string[] {
   return [...out]
 }
 
+/**
+ * Thrown when HF returns 401/403, which always means missing/invalid HF_TOKEN
+ * or a license that has not been accepted on the Hugging Face account that
+ * minted the token. These are configuration errors, not transient failures,
+ * so we surface them as fatal up the call stack.
+ */
+class HfAuthError extends Error {
+  status: number
+  url: string
+  constructor(status: number, statusText: string, url: string) {
+    super(`HF API ${status} ${statusText} for ${url}`)
+    this.name = 'HfAuthError'
+    this.status = status
+    this.url = url
+  }
+}
+
 /** Fetch JSON from HF with optional bearer token. */
 async function hfGet<T>(url: string): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json' }
   if (process.env.HF_TOKEN) headers.Authorization = `Bearer ${process.env.HF_TOKEN}`
   const res = await fetch(url, { headers, redirect: 'follow' })
-  if (!res.ok) throw new Error(`HF API ${res.status} ${res.statusText} for ${url}`)
+  if (!res.ok) {
+    if (res.status === 401 || res.status === 403) {
+      throw new HfAuthError(res.status, res.statusText, url)
+    }
+    throw new Error(`HF API ${res.status} ${res.statusText} for ${url}`)
+  }
   return res.json() as Promise<T>
 }
 
@@ -197,6 +219,7 @@ async function fetchRepoConfig(repo: string): Promise<HfModelInfo['config']> {
   try {
     return await hfGet<HfModelInfo['config']>(`https://huggingface.co/${repo}/resolve/main/config.json`)
   } catch (e) {
+    if (e instanceof HfAuthError) throw e
     console.warn(`[warn] ${repo}: no config.json (${(e as Error).message})`)
     return undefined
   }
@@ -315,6 +338,19 @@ async function main() {
         okRepos++
         console.log(`[ok]  ${repo} -> ${rows.length} preset(s)`)
       } catch (e) {
+        if (e instanceof HfAuthError) {
+          const tokenSet = Boolean(process.env.HF_TOKEN)
+          console.error(
+            `\n[fatal] ${repo}: HF returned ${e.status} for ${e.url}\n` +
+            (tokenSet
+              ? `        HF_TOKEN is set, but the token's account has not accepted the license for this gated repo.\n` +
+                `        Visit https://huggingface.co/${repo} while signed in as the token owner and accept the terms, then re-run.\n`
+              : `        HF_TOKEN is not set. Create a read token at https://huggingface.co/settings/tokens,\n` +
+                `        accept the license at https://huggingface.co/${repo}, then expose it to this job as the\n` +
+                `        HF_TOKEN repository secret (already wired in .github/workflows/sync-models.yml).\n`)
+          )
+          process.exit(1)
+        }
         failedRepos++
         console.error(`[fail] ${repo}: ${(e as Error).message}`)
       }
