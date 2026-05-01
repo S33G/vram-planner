@@ -118,7 +118,7 @@ export function Sidebar({
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">VRAM Planner</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">Plan model placement before loading weights.</h1>
         <p className="mt-3 text-sm leading-6 text-zinc-400">
-          Pick a target GPU, add models, and compare the simulated plan with live NVIDIA GPU memory when available.
+          Pick a target GPU and add models to plan VRAM usage before loading weights.
         </p>
       </section>
 
