@@ -1,10 +1,11 @@
+---
 name: Sync Hugging Face models
 
 on:
   schedule:
     # Mondays at 06:17 UTC. Off-peak so HF API rate limits are calmer.
     - cron: '17 6 * * 1'
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -19,24 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
-
+        run: pnpm install --frozen-lockfile
       - name: Run sync script
         env:
           # Optional: set repo secret HF_TOKEN to access gated repos (Llama, Gemma, ...).
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: npm run sync:models
-
+        run: pnpm run sync:models
       - name: Run unit tests
-        run: npm test
-
+        run: pnpm test
       - name: Open PR with refreshed model list
         uses: peter-evans/create-pull-request@v6
         with:
@@ -48,10 +44,10 @@ jobs:
             lib/models.generated.json
           body: |
             Automated weekly sync of `lib/models.generated.json` from the Hugging Face Hub.
-
+            
             Source allow-list: `scripts/hf-sources.json`.
             Generator: `scripts/sync-hf-models.ts` (run via `npm run sync:models`).
-
+            
             Curated entries in `lib/models.curated.ts` always win on `id` collisions, so this PR only changes auto-generated rows.
-
+            
             Review the diff for any unexpected jumps in `weightsGb`, `kvCachePer1kTokens`, or `contextLength` before merging. Merging triggers the existing `Deploy to GitHub Pages` workflow.
