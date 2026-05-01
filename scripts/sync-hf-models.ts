@@ -319,6 +319,7 @@ async function main() {
   const all: ModelPreset[] = []
   let okRepos = 0
   let failedRepos = 0
+  let gatedRepos = 0
 
   for (const fam of sources.families) {
     for (const repo of fam.repos) {
@@ -340,16 +341,12 @@ async function main() {
       } catch (e) {
         if (e instanceof HfAuthError) {
           const tokenSet = Boolean(process.env.HF_TOKEN)
-          console.error(
-            `\n[fatal] ${repo}: HF returned ${e.status} for ${e.url}\n` +
-            (tokenSet
-              ? `        HF_TOKEN is set, but the token's account has not accepted the license for this gated repo.\n` +
-                `        Visit https://huggingface.co/${repo} while signed in as the token owner and accept the terms, then re-run.\n`
-              : `        HF_TOKEN is not set. Create a read token at https://huggingface.co/settings/tokens,\n` +
-                `        accept the license at https://huggingface.co/${repo}, then expose it to this job as the\n` +
-                `        HF_TOKEN repository secret (already wired in .github/workflows/sync-models.yml).\n`)
-          )
-          process.exit(1)
+          const reason = tokenSet
+            ? `HF_TOKEN is set but lacks access (license not accepted by token owner). Visit https://huggingface.co/${repo} and accept the terms.`
+            : `HF_TOKEN is not set. Create one at https://huggingface.co/settings/tokens, accept the license at https://huggingface.co/${repo}, and add it as the HF_TOKEN repo secret.`
+          console.warn(`[gated] ${repo}: HF ${e.status} \u2014 skipping. ${reason}`)
+          gatedRepos++
+          continue
         }
         failedRepos++
         console.error(`[fail] ${repo}: ${(e as Error).message}`)
@@ -361,7 +358,7 @@ async function main() {
   all.sort((a, b) => a.id.localeCompare(b.id))
 
   await fs.writeFile(outPath, JSON.stringify(all, null, 2) + '\n', 'utf8')
-  console.log(`\nWrote ${all.length} entries to ${path.relative(root, outPath)} (repos ok=${okRepos}, failed=${failedRepos}).`)
+  console.log(`\nWrote ${all.length} entries to ${path.relative(root, outPath)} (repos ok=${okRepos}, gated=${gatedRepos}, failed=${failedRepos}).`)
 }
 
 // Only run main when invoked directly (not when imported by tests).
