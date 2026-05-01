@@ -1,27 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import type { ReactNode } from "react"
 import type { GpuSpec, Partition, SpillPolicy } from "@/lib/db"
 import { GPUs } from "@/lib/db"
 import { CustomGpuForm } from "@/components/custom-gpu-form"
-
-interface LiveGpu {
-  index: number
-  name: string
-  memoryTotalMiB: number
-  memoryUsedMiB: number
-  memoryFreeMiB: number
-  utilizationGpu: number | null
-  temperature: number | null
-}
-
-interface LiveGpuResponse {
-  available: boolean
-  gpus: LiveGpu[]
-  error?: string
-  updatedAt: string
-}
 
 interface VramVisualizationProps {
   gpu: GpuSpec | null
@@ -37,8 +20,6 @@ interface VramVisualizationProps {
   updateModelSlots: (instanceId: string, slots: number) => void
   updateModelContext: (instanceId: string, ctx: number) => void
 }
-
-const liveModeEnabled = process.env.NEXT_PUBLIC_ENABLE_LIVE_MODE !== "false"
 
 // ---- Tooltip primitives ----
 
@@ -173,19 +154,14 @@ const TOOLTIPS = {
   ),
   ramSpill: (
     <>
-      <strong className="text-zinc-100">RAM spill</strong> — model layers that cannot
-      fit in VRAM and fall back to system RAM. Dramatically slows inference because RAM
-      bandwidth (~50 GB/s) is far below GPU bandwidth (600–3000 GB/s).
+      <strong className="text-zinc-100">RAM spill</strong> — layers offloaded to system
+      RAM when VRAM is full. Slows inference significantly.
     </>
   ),
   fitStatus: (
     <>
-      <strong className="text-zinc-100">Fit status</strong> — whether the entire plan
-      fits in VRAM, spills to RAM, or does not fit at all.
-      <br /><br />
-      <em>Fits</em> — all layers in VRAM.<br />
-      <em>Spills to RAM</em> — partial offload to system RAM.<br />
-      <em>Does not fit</em> — even with RAM spill the model is too large.
+      <strong className="text-zinc-100">Fit status</strong> — whether the plan fits in
+      VRAM, spills to RAM, or doesn&rsquo;t fit at all.
     </>
   ),
   prefill: (
@@ -250,68 +226,30 @@ export function VramVisualization({
   partitions, totalUsedVram, totalFreeVram, totalRamSpill,
   updateModelSlots, updateModelContext,
 }: VramVisualizationProps) {
-  const [view, setView] = useState<"plan" | "live">("plan")
-  const [liveState, setLiveState] = useState<LiveGpuResponse | null>(null)
-  const [isLoadingLive, setIsLoadingLive] = useState(false)
-
-  useEffect(() => {
-    if (!liveModeEnabled || view !== "live") return
-    let cancelled = false
-    async function loadGpuState() {
-      setIsLoadingLive(true)
-      try {
-        const response = await fetch("/api/gpus", { cache: "no-store" })
-        const data = await response.json() as LiveGpuResponse
-        if (!cancelled) setLiveState(data)
-      } catch (error) {
-        if (!cancelled) setLiveState({
-          available: false, gpus: [],
-          error: error instanceof Error ? error.message : "Unable to load GPU state",
-          updatedAt: new Date().toISOString(),
-        })
-      } finally {
-        if (!cancelled) setIsLoadingLive(false)
-      }
-    }
-    loadGpuState()
-    const interval = window.setInterval(loadGpuState, 5000)
-    return () => { cancelled = true; window.clearInterval(interval) }
-  }, [view])
-
   return (
     <div className="flex h-dvh flex-1 flex-col overflow-y-auto bg-[radial-gradient(circle_at_top_right,_rgba(34,211,238,0.16),_transparent_28rem),#09090b] p-5 md:p-8">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">Machine View</p>
            <h2 className="mt-2 flex items-center gap-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-             {liveModeEnabled && view === "live" ? "Live NVIDIA memory state" : "Simulated VRAM allocation"}
+             Simulated VRAM allocation
              <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">Beta</span>
            </h2>
         </div>
-        {liveModeEnabled && (
-          <div className="flex rounded-2xl border border-zinc-800 bg-zinc-950 p-1">
-            <ToggleButton active={view === "plan"} onClick={() => setView("plan")}>Plan</ToggleButton>
-            <ToggleButton active={view === "live"} onClick={() => setView("live")}>Live host</ToggleButton>
-          </div>
-        )}
       </div>
 
-      {!liveModeEnabled || view === "plan" ? (
-        <PlanView
-          gpu={gpu}
-          setGpu={setGpu}
-          allGpus={allGpus}
-          onAddCustomGpu={onAddCustomGpu}
-          partitions={partitions}
-          totalUsedVram={totalUsedVram}
-          totalFreeVram={totalFreeVram}
-          totalRamSpill={totalRamSpill}
-          updateModelSlots={updateModelSlots}
-          updateModelContext={updateModelContext}
-        />
-      ) : (
-        <LiveView state={liveState} isLoading={isLoadingLive} />
-      )}
+      <PlanView
+        gpu={gpu}
+        setGpu={setGpu}
+        allGpus={allGpus}
+        onAddCustomGpu={onAddCustomGpu}
+        partitions={partitions}
+        totalUsedVram={totalUsedVram}
+        totalFreeVram={totalFreeVram}
+        totalRamSpill={totalRamSpill}
+        updateModelSlots={updateModelSlots}
+        updateModelContext={updateModelContext}
+      />
     </div>
   )
 }
@@ -725,53 +663,7 @@ function PartitionDetail({
   )
 }
 
-function LiveView({ state, isLoading }: { state: LiveGpuResponse | null; isLoading: boolean }) {
-  if (!state && isLoading) return <StatusPanel title="Checking host GPUs" description="Running nvidia-smi from the server container..." />
-  if (!state?.available) return (
-    <StatusPanel
-      title="No live NVIDIA state available"
-      description={state?.error ?? "nvidia-smi was not found or no GPUs were reported. Run the container with NVIDIA runtime support to enable this view."}
-    />
-  )
-  return (
-    <div className="mt-8 grid gap-5 xl:grid-cols-2">
-      {state.gpus.map((gpu) => {
-        const usedPercent = gpu.memoryTotalMiB > 0 ? (gpu.memoryUsedMiB / gpu.memoryTotalMiB) * 100 : 0
-        return (
-          <section key={gpu.index} className="rounded-3xl border border-zinc-800 bg-zinc-950/80 p-5 md:p-7">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">GPU {gpu.index}</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">{gpu.name}</h3>
-              </div>
-              <span className="rounded-full bg-cyan-400/10 px-3 py-1 text-sm font-semibold text-cyan-200">{usedPercent.toFixed(0)}% VRAM</span>
-            </div>
-            <div className="mt-8 h-8 overflow-hidden rounded-full bg-zinc-800">
-              <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-400" style={{ width: `${Math.min(usedPercent, 100)}%` }} />
-            </div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-4">
-              <SummaryCard label="Used"     value={`${mibToGib(gpu.memoryUsedMiB)} GiB`} />
-              <SummaryCard label="Free"     value={`${mibToGib(gpu.memoryFreeMiB)} GiB`} />
-              <SummaryCard label="Total"    value={`${mibToGib(gpu.memoryTotalMiB)} GiB`} />
-              <SummaryCard label="GPU util" value={gpu.utilizationGpu == null ? "n/a" : `${gpu.utilizationGpu}%`} />
-            </div>
-            <p className="mt-5 text-xs text-zinc-500">Updated {new Date(state.updatedAt).toLocaleTimeString()}</p>
-          </section>
-        )
-      })}
-    </div>
-  )
-}
-
 // ---- Primitives ----
-
-function ToggleButton({ active, children, onClick }: { active: boolean; children: ReactNode; onClick: () => void }) {
-  return (
-    <button type="button" onClick={onClick} className={`rounded-xl px-4 py-2 text-sm font-medium transition ${active ? "bg-cyan-400 text-zinc-950" : "text-zinc-400 hover:text-white"}`}>
-      {children}
-    </button>
-  )
-}
 
 function KpiCard({ label, value, tone, raw, fitColor, tooltip }: { label: string; value: string; tone?: 'normal' | 'bad' | 'warn'; raw?: boolean; fitColor?: string; tooltip?: ReactNode }) {
   const valueClass = raw && fitColor
@@ -815,16 +707,3 @@ function PerfRow({ label, value, tooltip }: { label: string; value: string; tool
     </div>
   )
 }
-
-function StatusPanel({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="mt-10 flex flex-1 items-center justify-center rounded-3xl border border-dashed border-zinc-800 bg-zinc-950/50 p-10 text-center">
-      <div className="max-w-lg">
-        <p className="text-lg font-medium text-white">{title}</p>
-        <p className="mt-2 text-sm leading-6 text-zinc-500">{description}</p>
-      </div>
-    </div>
-  )
-}
-
-function mibToGib(value: number) { return (value / 1024).toFixed(1) }
