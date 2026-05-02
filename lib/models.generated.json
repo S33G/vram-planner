@@ -166,6 +166,370 @@
     ]
   },
   {
+    "id": "google-gemma-2-27b-it",
+    "name": "gemma 2 27b it",
+    "family": "Gemma",
+    "parameters": 27.23,
+    "quantization": "bf16",
+    "weightsGb": 57.18,
+    "kvCachePer1kTokens": 0.386,
+    "headroomGb": 3,
+    "contextLength": 8192,
+    "recommendedGpuVram": 64,
+    "minGpuVram": 64,
+    "tags": [
+      "chat"
+    ]
+  },
+  {
+    "id": "google-gemma-2-27b-it-int4",
+    "name": "gemma 2 27b it (Q4)",
+    "family": "Gemma",
+    "parameters": 27.23,
+    "quantization": "int4",
+    "weightsGb": 14.3,
+    "kvCachePer1kTokens": 0.386,
+    "headroomGb": 3,
+    "contextLength": 8192,
+    "recommendedGpuVram": 24,
+    "minGpuVram": 20,
+    "tags": [
+      "chat"
+    ]
+  },
+  {
+    "id": "google-gemma-2-2b-it",
+    "name": "gemma 2 2b it",
+    "family": "Gemma",
+    "parameters": 2.61,
+    "quantization": "bf16",
+    "weightsGb": 5.48,
+    "kvCachePer1kTokens": 0.109,
+    "headroomGb": 1,
+    "contextLength": 8192,
+    "recommendedGpuVram": 8,
+    "minGpuVram": 8,
+    "tags": [
+      "chat",
+      "fast",
+      "edge"
+    ]
+  },
+  {
+    "id": "google-gemma-2-2b-it-int4",
+    "name": "gemma 2 2b it (Q4)",
+    "family": "Gemma",
+    "parameters": 2.61,
+    "quantization": "int4",
+    "weightsGb": 1.37,
+    "kvCachePer1kTokens": 0.109,
+    "headroomGb": 1,
+    "contextLength": 8192,
+    "recommendedGpuVram": 4,
+    "minGpuVram": 4,
+    "tags": [
+      "chat",
+      "fast",
+      "edge"
+    ]
+  },
+  {
+    "id": "google-gemma-2-9b-it",
+    "name": "gemma 2 9b it",
+    "family": "Gemma",
+    "parameters": 9.24,
+    "quantization": "bf16",
+    "weightsGb": 19.4,
+    "kvCachePer1kTokens": 0.352,
+    "headroomGb": 2,
+    "contextLength": 8192,
+    "recommendedGpuVram": 32,
+    "minGpuVram": 24,
+    "tags": [
+      "chat"
+    ]
+  },
+  {
+    "id": "google-gemma-2-9b-it-int4",
+    "name": "gemma 2 9b it (Q4)",
+    "family": "Gemma",
+    "parameters": 9.24,
+    "quantization": "int4",
+    "weightsGb": 4.85,
+    "kvCachePer1kTokens": 0.352,
+    "headroomGb": 2,
+    "contextLength": 8192,
+    "recommendedGpuVram": 12,
+    "minGpuVram": 8,
+    "tags": [
+      "chat"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-70b-instruct",
+    "name": "Llama 3.1 70B Instruct",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "bf16",
+    "weightsGb": 148.16,
+    "kvCachePer1kTokens": 0.336,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 160,
+    "minGpuVram": 160,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-70b-instruct-fp8",
+    "name": "Llama 3.1 70B Instruct (FP8)",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "fp8",
+    "weightsGb": 74.08,
+    "kvCachePer1kTokens": 0.168,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 80,
+    "minGpuVram": 80,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-70b-instruct-int4",
+    "name": "Llama 3.1 70B Instruct (Q4)",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "int4",
+    "weightsGb": 37.04,
+    "kvCachePer1kTokens": 0.336,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 48,
+    "minGpuVram": 48,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-8b-instruct",
+    "name": "Llama 3.1 8B Instruct",
+    "family": "Llama",
+    "parameters": 8.03,
+    "quantization": "bf16",
+    "weightsGb": 16.86,
+    "kvCachePer1kTokens": 0.134,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 20,
+    "minGpuVram": 20,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-8b-instruct-fp8",
+    "name": "Llama 3.1 8B Instruct (FP8)",
+    "family": "Llama",
+    "parameters": 8.03,
+    "quantization": "fp8",
+    "weightsGb": 8.43,
+    "kvCachePer1kTokens": 0.067,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 12,
+    "minGpuVram": 12,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-1-8b-instruct-int4",
+    "name": "Llama 3.1 8B Instruct (Q4)",
+    "family": "Llama",
+    "parameters": 8.03,
+    "quantization": "int4",
+    "weightsGb": 4.22,
+    "kvCachePer1kTokens": 0.134,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 8,
+    "minGpuVram": 8,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-1b-instruct",
+    "name": "Llama 3.2 1B Instruct",
+    "family": "Llama",
+    "parameters": 1.24,
+    "quantization": "bf16",
+    "weightsGb": 2.6,
+    "kvCachePer1kTokens": 0.034,
+    "headroomGb": 1,
+    "contextLength": 131072,
+    "recommendedGpuVram": 4,
+    "minGpuVram": 4,
+    "tags": [
+      "chat",
+      "fast",
+      "edge",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-1b-instruct-fp8",
+    "name": "Llama 3.2 1B Instruct (FP8)",
+    "family": "Llama",
+    "parameters": 1.24,
+    "quantization": "fp8",
+    "weightsGb": 1.3,
+    "kvCachePer1kTokens": 0.017,
+    "headroomGb": 1,
+    "contextLength": 131072,
+    "recommendedGpuVram": 4,
+    "minGpuVram": 4,
+    "tags": [
+      "chat",
+      "fast",
+      "edge",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-1b-instruct-int4",
+    "name": "Llama 3.2 1B Instruct (Q4)",
+    "family": "Llama",
+    "parameters": 1.24,
+    "quantization": "int4",
+    "weightsGb": 0.65,
+    "kvCachePer1kTokens": 0.034,
+    "headroomGb": 1,
+    "contextLength": 131072,
+    "recommendedGpuVram": 4,
+    "minGpuVram": 4,
+    "tags": [
+      "chat",
+      "fast",
+      "edge",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-3b-instruct",
+    "name": "Llama 3.2 3B Instruct",
+    "family": "Llama",
+    "parameters": 3.21,
+    "quantization": "bf16",
+    "weightsGb": 6.74,
+    "kvCachePer1kTokens": 0.117,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 12,
+    "minGpuVram": 12,
+    "tags": [
+      "chat",
+      "fast",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-3b-instruct-fp8",
+    "name": "Llama 3.2 3B Instruct (FP8)",
+    "family": "Llama",
+    "parameters": 3.21,
+    "quantization": "fp8",
+    "weightsGb": 3.37,
+    "kvCachePer1kTokens": 0.059,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 6,
+    "minGpuVram": 6,
+    "tags": [
+      "chat",
+      "fast",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-2-3b-instruct-int4",
+    "name": "Llama 3.2 3B Instruct (Q4)",
+    "family": "Llama",
+    "parameters": 3.21,
+    "quantization": "int4",
+    "weightsGb": 1.69,
+    "kvCachePer1kTokens": 0.117,
+    "headroomGb": 2,
+    "contextLength": 131072,
+    "recommendedGpuVram": 6,
+    "minGpuVram": 4,
+    "tags": [
+      "chat",
+      "fast",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-3-70b-instruct",
+    "name": "Llama 3.3 70B Instruct",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "bf16",
+    "weightsGb": 148.16,
+    "kvCachePer1kTokens": 0.336,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 160,
+    "minGpuVram": 160,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-3-70b-instruct-fp8",
+    "name": "Llama 3.3 70B Instruct (FP8)",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "fp8",
+    "weightsGb": 74.08,
+    "kvCachePer1kTokens": 0.168,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 80,
+    "minGpuVram": 80,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
+    "id": "meta-llama-llama-3-3-70b-instruct-int4",
+    "name": "Llama 3.3 70B Instruct (Q4)",
+    "family": "Llama",
+    "parameters": 70.55,
+    "quantization": "int4",
+    "weightsGb": 37.04,
+    "kvCachePer1kTokens": 0.336,
+    "headroomGb": 4,
+    "contextLength": 131072,
+    "recommendedGpuVram": 48,
+    "minGpuVram": 48,
+    "tags": [
+      "chat",
+      "long-context"
+    ]
+  },
+  {
     "id": "microsoft-phi-3-5-mini-instruct",
     "name": "Phi 3.5 mini instruct",
     "family": "Phi",
